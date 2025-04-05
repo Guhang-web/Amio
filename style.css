@@ -208,10 +208,10 @@ body{
 /* section1 middle */
 #main #section1 .S1Wrapper .S1WrapperMiddle {
     position: absolute;
-    top: 140px;
+    top: 135px;
     left: -35px;
     display: flex;
-    width: 2055px;
+    width: 2065px;
     height: 50%;
     justify-content: space-between;
 }
@@ -222,9 +222,9 @@ body{
 }
 
 #main #section1 .S1Wrapper .S1WrapperMiddle .plantRight1 {
-    width: 455px;
-    height: 390px;
-    margin-top: 80px;
+    width: 425px;
+    height: 350px;
+    margin-top: 110px;
 }
 
 #main #section1 .S1Wrapper .S1WrapperMiddle img {
@@ -239,7 +239,6 @@ body{
     left: -82px;
     bottom: 0;
     width: 2060px;
-    height: 655px;
     justify-content: space-between;
     z-index: 11;
 }
@@ -255,15 +254,15 @@ height: 100%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperDown .plantRight2 {
-    width: 16%;
-    height: 510px;
-    margin-top: 30px;
+    width: 14%;
+    height: 465px;
+    margin-top: 75px;
 }
 
 #main #section1 .S1Wrapper .backUp {
-    background-color: rgba(213, 243, 168, 0.5);
+    background-color: rgba(229, 231, 237, 1);
     background-position: left;
-    width: 95%;
+    width: 100%;
     height: 25%;
     border-right: 5px solid rgba(212, 235, 179, 1);;
     position: absolute;
