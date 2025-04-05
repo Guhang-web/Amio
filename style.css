@@ -1,0 +1,275 @@
+body{
+    overflow-x: hidden;
+}
+#main {
+    position: relative;
+    width: 100%;
+}
+
+/*  Section1 */
+#main #section1 {
+    background-image: url("mainImg/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+#main #section1 .backBg {
+    background-image: url("mainImg/backgUp.png");
+    opacity: 0.8;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#main #section1 .backBg .sun {
+    background-image: url("mainImg/sun.png");
+    width: 1400px;
+    height: 770px;
+
+}
+
+/* Section1 Header */
+#main #section1 #header {
+    position: relative;
+    background-color: rgba(57, 175, 57, 0.9);
+    width: 64%;
+    min-width: 1196px;
+    height: 65px;
+    margin: 0 auto;
+    border: 2px solid #000;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top: none;
+    z-index: 10;
+}
+
+#main #section1 #header .headerGnb {
+    width: 98%;
+    min-width: 1173px;
+    height: 82%;
+    margin: 0 auto;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: rgba(100, 100, 100, 0.3);
+    display: flex;
+    gap: 18%;
+}
+
+#main #section1 #header .headerGnb li {
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+#main #section1 #header .headerGnb li:nth-child(1) {
+    margin-left: 20px;
+}
+
+#main #section1 #header .headerGnb li:nth-child(5) {
+    margin-right: 20px;
+}
+
+#main #section1 #header .headerGnb li a {
+    color: #fff;
+}
+
+/* section1 lamp */
+#main #section1 .lamp {
+    width: 80.2%;
+    min-width: 1328px;
+    height: 240px;
+    margin: -90px auto;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+#main #section1 .lamp li {
+    width: 260px;
+    height: 100%;
+}
+
+#main #section1 .lamp li img {
+    width: 100%;
+    height: 100%;
+}
+
+/* section1 logoGnb */
+#main #section1 .logoGnb {
+    position: relative;
+    width: 24%;
+    min-width: 400px;
+    height: 22%;
+    margin: 0 auto;
+}
+
+#main #section1 .logoGnb li {
+    margin: 0 auto;
+}
+
+#main #section1 .logoGnb li img {
+    width: 100%;
+    height: 100%;
+}
+
+#main #section1 .logoGnb li:nth-child(2) {
+    width: 45%;
+}
+
+/* section1 S1Wrapper */
+#main #section1 .S1Wrapper {
+    position: relative;
+    bottom: 30px;
+    width: 100%;
+    height: 105.5%;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp {
+    display: flex;
+    width: 100%;
+    height: 760px;
+    position: absolute;
+    top: 30px;
+    left: 0;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp li {
+    text-align: center;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp li img {
+    width: 100%;
+    height: 100%;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .catsTower {
+    width: 28.5%;
+    height: 635px;
+    position: absolute;
+    top: -45px;
+    left: 0;
+    margin-left: 13.3%;
+    z-index: 9;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .girl {
+    width: 23%;
+    height: 645px;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .dogFruit {
+    width: 21%;
+    height: 202px;
+    position: absolute;
+    top: 290px;
+    right: 0;
+    margin-right: 19%;
+
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .tableSub {
+    background-image: url("mainImg/table2.png");
+    background-repeat: no-repeat;
+    width: 24%;
+    height: 340px;
+    position: absolute;
+    top: 170px;
+    right: 0;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .rightSetting {
+    width: 19%;
+    height: 135px;
+    position: absolute;
+    top: 95px;
+    right: 0;
+    margin-right: 20px;
+    z-index: 8;
+}
+
+#main #section1 .S1Wrapper .S1WrapperUp .mainTable {
+    background-image: url("mainImg/tableMain.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 304px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+}
+
+/* section1 middle */
+#main #section1 .S1Wrapper .S1WrapperMiddle {
+    position: absolute;
+    top: 140px;
+    left: -35px;
+    display: flex;
+    width: 2055px;
+    height: 50%;
+    justify-content: space-between;
+}
+
+#main #section1 .S1Wrapper .S1WrapperMiddle .plantLeft1 {
+    width: 375px;
+    height: 400px;
+}
+
+#main #section1 .S1Wrapper .S1WrapperMiddle .plantRight1 {
+    width: 455px;
+    height: 390px;
+    margin-top: 80px;
+}
+
+#main #section1 .S1Wrapper .S1WrapperMiddle img {
+    width: 100%;
+    height: 100%;
+}
+
+/* section1 Down */
+#main #section1 .S1Wrapper .S1WrapperDown {
+    display: flex;
+    position: absolute;
+    left: -82px;
+    bottom: 0;
+    width: 2060px;
+    height: 655px;
+    justify-content: space-between;
+    z-index: 11;
+}
+
+#main #section1 .S1Wrapper .S1WrapperDown li img{
+width: 100%;
+height: 100%;
+}
+
+#main #section1 .S1Wrapper .S1WrapperDown .plantLeft2 {
+    width: 13.1%;
+    height: 605px;
+}
+
+#main #section1 .S1Wrapper .S1WrapperDown .plantRight2 {
+    width: 16%;
+    height: 510px;
+    margin-top: 30px;
+}
+
+#main #section1 .S1Wrapper .backUp {
+    background-color: rgba(213, 243, 168, 0.5);
+    background-position: left;
+    width: 95%;
+    height: 25%;
+    border-right: 5px solid rgba(212, 235, 179, 1);;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#main #section2 {
+    
+}
