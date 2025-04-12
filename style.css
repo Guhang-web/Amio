@@ -1,6 +1,7 @@
-body{
+body {
     overflow-x: hidden;
 }
+
 #main {
     position: relative;
     width: 100%;
@@ -149,7 +150,7 @@ body{
 
 #main #section1 .S1Wrapper .S1WrapperUp .catsTower {
     width: 543px;
-    height: 635px;
+    height: 620px;
     position: absolute;
     top: -45px;
     right: 58%;
@@ -158,10 +159,11 @@ body{
 
 #main #section1 .S1Wrapper .S1WrapperUp .girl {
     width: 438px;
-    height: 645px;
+    height: 620px;
     margin: 0 auto;
     padding-left: 20px;
 }
+
 #main #section1 .S1Wrapper .S1WrapperUp .tolk {
     width: 345px;
     height: 155px;
@@ -170,21 +172,23 @@ body{
     left: 55%;
     text-align: left;
 }
-#main #section1 .S1Wrapper .S1WrapperUp .tolk p{
-position: absolute;
-top: 0;
-left: 0;
-line-height: 1.3;
-margin: 35px 75px;
-width: 240px;
-font-weight: bold;
-color: green;
+
+#main #section1 .S1Wrapper .S1WrapperUp .tolk p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 1.3;
+    margin: 35px 75px;
+    width: 240px;
+    font-weight: bold;
+    color: green;
 }
+
 #main #section1 .S1Wrapper .S1WrapperUp .dogFruit {
     width: 400px;
     height: 202px;
     position: absolute;
-    top: 290px;
+    top: 272px;
     right: 0;
     margin-right: 19%;
 
@@ -218,16 +222,16 @@ color: green;
     width: 100%;
     height: 304px;
     position: absolute;
-    bottom: 0;
+    bottom: 18px;
     left: 0;
-    z-index: 10;
+    z-index: 11;
     margin: 0;
 }
 
 /* section1 middle */
 #main #section1 .S1Wrapper .S1WrapperMiddle {
     position: absolute;
-    top: 135px;
+    top: 130px;
     left: -35px;
     display: flex;
     width: 2065px;
@@ -238,6 +242,7 @@ color: green;
 #main #section1 .S1Wrapper .S1WrapperMiddle .plantLeft1 {
     width: 375px;
     height: 400px;
+    z-index: 10;
 }
 
 #main #section1 .S1Wrapper .S1WrapperMiddle .plantRight1 {
@@ -255,16 +260,16 @@ color: green;
 #main #section1 .S1Wrapper .S1WrapperDown {
     display: flex;
     position: absolute;
-    left: -62px;
-    bottom: 15px;
-    width: 105.2vw;
+    left: -70px;
+    bottom: 64px;
+    width: 108.2vw;
     justify-content: space-between;
     z-index: 11;
 }
 
-#main #section1 .S1Wrapper .S1WrapperDown li img{
-width: 100%;
-height: 100%;
+#main #section1 .S1Wrapper .S1WrapperDown li img {
+    width: 100%;
+    height: 100%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperDown .plantLeft2 {
@@ -282,13 +287,15 @@ height: 100%;
     background-color: rgba(212, 235, 180, 0.5);
     background-position: left;
     width: 100%;
-    height: 25%;
-    border-right: 5px solid rgba(212, 235, 179, 1);;
+    height: 30%;
+    border-right: 5px solid rgba(212, 235, 179, 1);
     position: absolute;
     bottom: 0;
     left: 0;
 }
+
 /* section1 Profile */
+/* dog */
 #main #section1 #dogProfile {
     position: absolute;
     top: 0;
@@ -297,57 +304,230 @@ height: 100%;
     width: 100%;
     height: 100vh;
     z-index: 9;
+    display: none;
 }
-#main #section1 #dogProfile ul{
+
+#main #section1 #dogProfile ul {
     width: 1000px;
-    height: 700px;
+    height: 670px;
     display: flex;
     position: absolute;
-    top: 44%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-#main #section1 #dogProfile ul .IdCard{
-    width: 940px;
+
+#main #section1 #dogProfile ul .IdCard {
+    width: 786px;
     height: 435px;
+    margin: 0px auto;
 }
-#main #section1 #dogProfile ul .dogIdCard{
+
+#main #section1 #dogProfile ul .dogIdCard {
     position: absolute;
-    top: 58px;
-    left: 64px;
+    top: 60px;
+    left: 169px;
     width: 225px;
     height: 224px;
     overflow: hidden;
     border-radius: 35px;
-    
+
 }
-#main #section1 #dogProfile ul .dogIdCard img{
+
+#main #section1 #dogProfile ul .dogIdCard img {
     width: 260px;
     height: 260px;
     margin: 5px -23px;
 }
-#main #section1 #dogProfile ul .Profile{
+
+#main #section1 #dogProfile ul .Profile {
     position: absolute;
-    top: 28px;
-    left: 320px;
+    top: 45px;
+    left: 430px;
     width: 150px;
-    height: 224px;
+    height: 250px;
 }
-#main #section1 #dogProfile ul .Profile p{
-    margin-top: 40px;
+
+#main #section1 #dogProfile ul .Profile p {
+    margin-top: 30px;
     line-height: 1.3;
     font-weight: bold;
     color: green;
     font-size: 14px;
 }
-#main #section1 #dogProfile ul h3{
+
+#main #section1 #dogProfile ul h3 {
+    position: absolute;
+    bottom: 280px;
+    left: 200px;
+    font-size: 2em;
+    font-weight: bold;
+    color: green;
+    letter-spacing: 1.5px;
+}
+
+#main #section1 #dogProfile ul .dog {
+    position: absolute;
+    bottom: 0;
+    left: -35px;
+    width: 400px;
+    height: 300px;
+}
+
+#main #section1 #dogProfile ul .dog img {
+    width: 100%;
+    height: 100%;
+}
+
+/* cat */
+#main #section1 #catProfile {
     position: absolute;
     top: 0;
     left: 0;
+    background-color: rgba(250, 250, 250, 0.7);
+    width: 100%;
+    height: 100vh;
+    z-index: 9;
+    display: none;
+}
+
+#main #section1 #catProfile ul {
+    width: 1000px;
+    height: 670px;
+    display: flex;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#main #section1 #catProfile ul .IdCard {
+    width: 786px;
+    height: 435px;
+    margin: 0px auto;
+}
+
+#main #section1 #catProfile ul .catIdCard {
+    position: absolute;
+    top: 60px;
+    left: 169px;
+    width: 225px;
+    height: 224px;
+    overflow: hidden;
+    border-radius: 35px;
+
+}
+
+#main #section1 #catProfile ul .catIdCard img {
+    width: 300px;
+    height: 340px;
+    margin: 0px 20px;
+}
+
+#main #section1 #catProfile ul .Profile {
+    position: absolute;
+    top: 45px;
+    left: 430px;
+    width: 150px;
+    height: 250px;
+}
+
+#main #section1 #catProfile ul .Profile p {
+    margin-top: 35px;
+    line-height: 1.3;
+    font-weight: bold;
+    color: green;
+    font-size: 14px;
+}
+
+#main #section1 #catProfile ul h3 {
+    position: absolute;
+    bottom: 280px;
+    left: 200px;
+    font-size: 2em;
+    font-weight: bold;
+    color: green;
+    letter-spacing: 1.5px;
+}
+
+#main #section1 #catProfile ul .cat {
+    position: absolute;
+    bottom: -700px;
+    left: -340px;
+    width: 800px;
+    height: 1100px;
+}
+
+#main #section1 #catProfile ul .cat img {
+    width: 100%;
+    height: 100%;
 }
 
 
 /* section2 */
 #main #section2 {
+    background-color: rgba(212, 235, 179, 1);
+    height: 150vh;
+    width: 100%;
+}
+
+#main #section2 #patEatMenu {
+    position: relative;
+    top: 280px;
+}
+
+#main #section2 #patEatMenu div {
+    height: 56vh;
+    width: 100vw;
+}
+
+#main #section2 #patEatMenu #dogEatMenu {
+    background-image: url(section1Img/eatTable.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-size: 107vw;
+}
+
+#main #section2 #patEatMenu #dogEatMenu h2 {
+    padding-top: 30px;
+    margin-left: 320px;
+    font-size: 24px;
+    font-weight: 1000;
+    width: 200px;
+    height: 30px;
+    position: relative;
     
+}
+#main #section2 #patEatMenu #dogEatMenu h2 span{
+    position: absolute;
+    bottom: -2px;
+    right: 10px;
+}
+
+#main #section2 #patEatMenu h2 svg {
+    stroke: #000;
+    stroke-width: 1px;
+}
+#main #section2 #patEatMenu ul {
+    display: flex;
+    width: 100vw;
+    height: 280px;
+    position: relative;
+    left: 320px;
+    gap: 90px;
+}
+/* 고양이 */
+#main #section2 #patEatMenu #catEatMenu h2 {
+    padding-top: 30px;
+    margin-left: 320px;
+    font-size: 24px;
+    font-weight: 1000;
+    width: 200px;
+    height: 30px;
+    position: relative;
+}
+#main #section2 #patEatMenu #catEatMenu h2 span{
+    position: absolute;
+    bottom: -2px;
+    right: 10px;
 }
