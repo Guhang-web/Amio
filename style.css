@@ -126,7 +126,7 @@ body {
     bottom: 30px;
     width: 100vw;
     min-width: 1920px;
-    height: 105.5%;
+    height: 100%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp {
@@ -154,7 +154,7 @@ body {
     position: absolute;
     top: -45px;
     right: 58%;
-    z-index: 9;
+    z-index: 22;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp .girl {
@@ -191,6 +191,8 @@ body {
     top: 272px;
     right: 0;
     margin-right: 19%;
+    cursor: pointer;
+    z-index: 20;
 
 }
 
@@ -224,7 +226,7 @@ body {
     position: absolute;
     bottom: 18px;
     left: 0;
-    z-index: 11;
+    z-index: 22;
     margin: 0;
 }
 
@@ -261,7 +263,7 @@ body {
     display: flex;
     position: absolute;
     left: -70px;
-    bottom: 64px;
+    bottom: 40px;
     width: 108.2vw;
     justify-content: space-between;
     z-index: 11;
@@ -281,17 +283,6 @@ body {
     width: 285px;
     height: 455px;
     margin-top: 35px;
-}
-
-#main #section1 .S1Wrapper .backUp {
-    background-color: rgba(212, 235, 180, 0.5);
-    background-position: left;
-    width: 100%;
-    height: 30%;
-    border-right: 5px solid rgba(212, 235, 179, 1);
-    position: absolute;
-    bottom: 0;
-    left: 0;
 }
 
 /* section1 Profile */
@@ -467,38 +458,39 @@ body {
 /* section2 */
 #main #section2 {
     background-color: rgba(212, 235, 179, 1);
-    height: 150vh;
+    height: 100vh;
     width: 100%;
 }
 
 #main #section2 #patEatMenu {
-    position: relative;
-    top: 280px;
-}
-
-#main #section2 #patEatMenu div {
-    height: 56vh;
-    width: 100vw;
+    width: 100%;
+    height: 100%;
 }
 
 #main #section2 #patEatMenu #dogEatMenu {
     background-image: url(section1Img/eatTable.png);
     background-repeat: no-repeat;
     background-position: bottom;
-    background-size: 107vw;
+    background-size: 115vw;
+    position: absolute;
+    bottom: 55px;
+    left: 0;
+    z-index: 10;
+    height: 72vh;
+    width: 100vw;
 }
 
 #main #section2 #patEatMenu #dogEatMenu h2 {
-    padding-top: 30px;
-    margin-left: 320px;
-    font-size: 24px;
-    font-weight: 1000;
-    width: 200px;
-    height: 30px;
+    margin-left: 335px;
+    font-size: 42px;
+    font-weight: bold;
+    width: 380px;
+    height: 58px;
     position: relative;
-    
+
 }
-#main #section2 #patEatMenu #dogEatMenu h2 span{
+
+#main #section2 #patEatMenu #dogEatMenu h2 span {
     position: absolute;
     bottom: -2px;
     right: 10px;
@@ -507,15 +499,86 @@ body {
 #main #section2 #patEatMenu h2 svg {
     stroke: #000;
     stroke-width: 1px;
+
 }
+
 #main #section2 #patEatMenu ul {
     display: flex;
     width: 100vw;
-    height: 280px;
     position: relative;
-    left: 320px;
-    gap: 90px;
+    left: 315px;
+    gap: 20px;
 }
+
+#main #section2 #patEatMenu ul li {
+    width: 300px;
+    height: 550px;
+    margin-top: 135px;
+}
+
+#main #section2 #patEatMenu ul li img {
+    width: 290px;
+    height: 367px;
+}
+
+#main #section2 #patEatMenu ul li:nth-child(1) img {
+    width: 274px;
+    height: 443px;
+}
+
+#main #section2 #patEatMenu ul li:nth-child(1) {
+    margin-top: 60px;
+}
+
+#main #section2 #patEatMenu ul li div {
+    margin-top: 86px;
+    margin-left: 15px;
+}
+
+#main #section2 #patEatMenu ul li .eatList1 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    width: 35px;
+    height: 18px;
+    line-height: 18px;
+    background-color: green;
+    text-align: center;
+}
+#main #section2 #patEatMenu ul li .eatList2 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    width: 35px;
+    height: 18px;
+    line-height: 18px;
+    background-color: orange;
+    text-align: center;
+}
+
+#main #section2 #patEatMenu ul li .eatGnb {
+    margin-top: 7px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 20px;
+    
+}
+
+#main #section2 #patEatMenu .eatMenuList {
+    width: 100%;
+    height: 155px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-image: url(section1Img/eatTableBg.png);
+    background-repeat: no-repeat;
+    background-position: top;
+}
+#main #section2 #patEatMenu ul li .eatFooter {
+    font-weight: bold;
+    color: green;
+}
+
 /* 고양이 */
 #main #section2 #patEatMenu #catEatMenu h2 {
     padding-top: 30px;
@@ -526,7 +589,8 @@ body {
     height: 30px;
     position: relative;
 }
-#main #section2 #patEatMenu #catEatMenu h2 span{
+
+#main #section2 #patEatMenu #catEatMenu h2 span {
     position: absolute;
     bottom: -2px;
     right: 10px;
