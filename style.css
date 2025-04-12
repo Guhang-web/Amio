@@ -123,13 +123,14 @@ body{
 #main #section1 .S1Wrapper {
     position: relative;
     bottom: 30px;
-    width: 100%;
+    width: 100vw;
+    min-width: 1920px;
     height: 105.5%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp {
     display: flex;
-    width: 100%;
+    width: 100vw;
     height: 760px;
     position: absolute;
     top: 30px;
@@ -138,6 +139,7 @@ body{
 
 #main #section1 .S1Wrapper .S1WrapperUp li {
     text-align: center;
+    margin: 0 10px;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp li img {
@@ -146,24 +148,40 @@ body{
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp .catsTower {
-    width: 28.5%;
+    width: 543px;
     height: 635px;
     position: absolute;
     top: -45px;
-    left: 0;
-    margin-left: 13.3%;
+    right: 58%;
     z-index: 9;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp .girl {
-    width: 23%;
+    width: 438px;
     height: 645px;
     margin: 0 auto;
     padding-left: 20px;
 }
-
+#main #section1 .S1Wrapper .S1WrapperUp .tolk {
+    width: 345px;
+    height: 155px;
+    position: absolute;
+    top: 50px;
+    left: 55%;
+    text-align: left;
+}
+#main #section1 .S1Wrapper .S1WrapperUp .tolk p{
+position: absolute;
+top: 0;
+left: 0;
+line-height: 1.3;
+margin: 35px 75px;
+width: 240px;
+font-weight: bold;
+color: green;
+}
 #main #section1 .S1Wrapper .S1WrapperUp .dogFruit {
-    width: 21%;
+    width: 400px;
     height: 202px;
     position: absolute;
     top: 290px;
@@ -175,7 +193,7 @@ body{
 #main #section1 .S1Wrapper .S1WrapperUp .tableSub {
     background-image: url("mainImg/table2.png");
     background-repeat: no-repeat;
-    width: 24%;
+    width: 457px;
     height: 340px;
     position: absolute;
     top: 170px;
@@ -183,7 +201,7 @@ body{
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp .rightSetting {
-    width: 19%;
+    width: 362px;
     height: 135px;
     position: absolute;
     top: 95px;
@@ -203,6 +221,7 @@ body{
     bottom: 0;
     left: 0;
     z-index: 10;
+    margin: 0;
 }
 
 /* section1 middle */
@@ -236,9 +255,9 @@ body{
 #main #section1 .S1Wrapper .S1WrapperDown {
     display: flex;
     position: absolute;
-    left: -82px;
-    bottom: 0;
-    width: 2060px;
+    left: -62px;
+    bottom: 15px;
+    width: 105.2vw;
     justify-content: space-between;
     z-index: 11;
 }
@@ -249,18 +268,18 @@ height: 100%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperDown .plantLeft2 {
-    width: 13.1%;
-    height: 605px;
+    width: 220px;
+    height: 570px;
 }
 
 #main #section1 .S1Wrapper .S1WrapperDown .plantRight2 {
-    width: 14%;
-    height: 465px;
-    margin-top: 75px;
+    width: 285px;
+    height: 455px;
+    margin-top: 35px;
 }
 
 #main #section1 .S1Wrapper .backUp {
-    background-color: rgba(229, 231, 237, 1);
+    background-color: rgba(212, 235, 180, 0.5);
     background-position: left;
     width: 100%;
     height: 25%;
@@ -269,6 +288,66 @@ height: 100%;
     bottom: 0;
     left: 0;
 }
+/* section1 Profile */
+#main #section1 #dogProfile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(250, 250, 250, 0.7);
+    width: 100%;
+    height: 100vh;
+    z-index: 9;
+}
+#main #section1 #dogProfile ul{
+    width: 1000px;
+    height: 700px;
+    display: flex;
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#main #section1 #dogProfile ul .IdCard{
+    width: 940px;
+    height: 435px;
+}
+#main #section1 #dogProfile ul .dogIdCard{
+    position: absolute;
+    top: 58px;
+    left: 64px;
+    width: 225px;
+    height: 224px;
+    overflow: hidden;
+    border-radius: 35px;
+    
+}
+#main #section1 #dogProfile ul .dogIdCard img{
+    width: 260px;
+    height: 260px;
+    margin: 5px -23px;
+}
+#main #section1 #dogProfile ul .Profile{
+    position: absolute;
+    top: 28px;
+    left: 320px;
+    width: 150px;
+    height: 224px;
+}
+#main #section1 #dogProfile ul .Profile p{
+    margin-top: 40px;
+    line-height: 1.3;
+    font-weight: bold;
+    color: green;
+    font-size: 14px;
+}
+#main #section1 #dogProfile ul h3{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+/* section2 */
 #main #section2 {
     
 }
