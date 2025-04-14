@@ -460,6 +460,7 @@ body {
     background-color: rgba(212, 235, 179, 1);
     height: 100vh;
     width: 100%;
+    position: relative;
 }
 
 #main #section2 #patEatMenu {
@@ -493,7 +494,7 @@ body {
 #main #section2 #patEatMenu #dogEatMenu h2 span {
     position: absolute;
     bottom: -2px;
-    right: 10px;
+    right: 40px;
 }
 
 #main #section2 #patEatMenu h2 svg {
@@ -545,6 +546,7 @@ body {
     background-color: green;
     text-align: center;
 }
+
 #main #section2 #patEatMenu ul li .eatList2 {
     font-size: 12px;
     font-weight: bold;
@@ -561,7 +563,12 @@ body {
     margin-bottom: 12px;
     font-weight: bold;
     font-size: 20px;
-    
+
+}
+
+#main #section2 #patEatMenu ul li .eatFooter {
+    font-weight: bold;
+    color: green;
 }
 
 #main #section2 #patEatMenu .eatMenuList {
@@ -574,24 +581,146 @@ body {
     background-repeat: no-repeat;
     background-position: top;
 }
-#main #section2 #patEatMenu ul li .eatFooter {
+
+/* 고양이  section3*/
+#main #section3 {
+    background-color: rgba(212, 235, 179, 1);
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+#main #section3 #patEatMenu1 {
+    width: 100%;
+    height: 100%;
+}
+
+#main #section3 #patEatMenu1 #catEatMenu {
+    background-image: url(section1Img/eatTable.png);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    background-size: 115vw;
+    z-index: 10;
+    height: 72vh;
+    width: 100vw;
+}
+
+#main #section3 #patEatMenu1 #catEatMenu h2 {
+    margin-left: 335px;
+    font-size: 42px;
+    font-weight: bold;
+    width: 380px;
+    height: 58px;
+    position: relative;
+
+}
+
+#main #section3 #patEatMenu1 #catEatMenu h2 span {
+    position: absolute;
+    bottom: -2px;
+    right: 40px;
+}
+
+#main #section3 #patEatMenu1 h2 svg {
+    stroke: #000;
+    stroke-width: 1px;
+
+}
+
+#main #section3 #patEatMenu1 ul {
+    display: flex;
+    width: 100vw;
+    position: relative;
+    left: 315px;
+    gap: 20px;
+}
+
+#main #section3 #patEatMenu1 ul li {
+    width: 300px;
+    height: 550px;
+    margin-top: 135px;
+}
+
+#main #section3 #patEatMenu1 ul li img {
+    width: 290px;
+    height: 367px;
+}
+
+#main #section3 #patEatMenu1 ul li:nth-child(1) img {
+    width: 274px;
+    height: 443px;
+}
+
+#main #section3 #patEatMenu1 ul li:nth-child(1) {
+    margin-top: 60px;
+}
+#main #section3 #patEatMenu1 ul li:nth-child(3) img {
+    width: 274px;
+    height: 443px;
+}
+
+#main #section3 #patEatMenu1 ul li:nth-child(3) {
+    margin-top: 60px;
+}
+#main #section3 #patEatMenu1 ul li:nth-child(5) img {
+    width: 274px;
+    height: 443px;
+}
+
+#main #section3 #patEatMenu1 ul li:nth-child(5) {
+    margin-top: 60px;
+}
+
+#main #section3 #patEatMenu1 ul li div {
+    margin-top: 86px;
+    margin-left: 15px;
+}
+
+#main #section3 #patEatMenu1 ul li .eatList1 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    width: 35px;
+    height: 18px;
+    line-height: 18px;
+    background-color: green;
+    text-align: center;
+}
+
+#main #section3 #patEatMenu1 ul li .eatList2 {
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    width: 35px;
+    height: 18px;
+    line-height: 18px;
+    background-color: orange;
+    text-align: center;
+}
+
+#main #section3 #patEatMenu1 ul li .eatGnb {
+    margin-top: 7px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 20px;
+
+}
+
+#main #section3 #patEatMenu1 ul li .eatFooter {
     font-weight: bold;
     color: green;
 }
 
-/* 고양이 */
-#main #section2 #patEatMenu #catEatMenu h2 {
-    padding-top: 30px;
-    margin-left: 320px;
-    font-size: 24px;
-    font-weight: 1000;
-    width: 200px;
-    height: 30px;
-    position: relative;
-}
-
-#main #section2 #patEatMenu #catEatMenu h2 span {
+#main #section3 #patEatMenu1 .eatMenuList {
+    width: 100%;
+    height: 155px;
     position: absolute;
-    bottom: -2px;
-    right: 10px;
+    bottom: 110px;
+    left: 0;
+    background-image: url(section1Img/eatTableBg.png);
+    background-repeat: no-repeat;
+    background-position: top;
 }
