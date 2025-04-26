@@ -1,5 +1,6 @@
 body {
     overflow-x: hidden;
+    /* overflow-y: hidden; */
 }
 
 #main {
@@ -126,7 +127,7 @@ body {
     bottom: 30px;
     width: 100vw;
     min-width: 1920px;
-    height: 100%;
+    height: 93%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp {
@@ -295,7 +296,10 @@ body {
     width: 100%;
     height: 100vh;
     z-index: 9;
-    display: none; 
+    opacity: 0;
+    transform: translateX(-50px);
+    /* 왼쪽에서 이동해오는 느낌 */
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 #main #section1 #dogProfile ul {
@@ -379,7 +383,10 @@ body {
     width: 100%;
     height: 100vh;
     z-index: 9;
-    display: none;
+    opacity: 0;
+    transform: translateX(-50px);
+    /* 왼쪽에서 이동해오는 느낌 */
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 #main #section1 #catProfile ul {
@@ -454,6 +461,16 @@ body {
     height: 100%;
 }
 
+#main #section1 #dogProfile.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+#main #section1 #catProfile.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 
 /*강아지먹이 section2------------------------- */
 #main #section2 {
@@ -472,20 +489,57 @@ body {
     background-image: url(section1Img/eatTable.png);
     background-repeat: no-repeat;
     background-position: bottom;
-    background-size: 115vw;
+    background-size: 2175px;
     position: absolute;
     bottom: 55px;
     left: 0;
     z-index: 10;
     height: 72vh;
-    width: 100vw;
+    width: 1895px;
+}
+
+.custom-slider {
+    -webkit-appearance: none;
+    width: 1600px;
+    height: 16px;
+    /* 나무판 높이 */
+    background: linear-gradient(#5a3b1d 0%,
+            /* 나무색 */
+            #5a3b1d 70%,
+            #3e2b1a 70%,
+            /* 어두운 얇은 줄 */
+            #3e2b1a 75%,
+            #5a3b1d 75%,
+            #5a3b1d 100%);
+    border: none;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 100px;
+    left: 350px;
+    outline: none;
+    cursor: pointer;
+    z-index: 200;
+}
+
+.custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 800px;
+    /* 길게 */
+    height: 10px;
+    /* 살짝 얇게 */
+    background: #cccccc;
+    border: 1px solid #999999;
+    border-radius: 6px;
+    margin-top: 2px;
+    cursor: pointer;
 }
 
 #main #section2 #patEatMenu #dogEatMenu h2 {
     margin-left: 365px;
     font-size: 42px;
     font-weight: bold;
-    width: 380px;
+    width: 400px;
     height: 58px;
     position: relative;
 
@@ -503,11 +557,12 @@ body {
 
 }
 
-#main #section2 #patEatMenu ul {
+#main #section2 #patEatMenu .eatMenu {
     display: flex;
     width: 100vw;
     position: relative;
     left: 340px;
+    top: 25px;
     gap: 20px;
 }
 
@@ -602,17 +657,17 @@ body {
     position: absolute;
     top: 80px;
     left: 0;
-    background-size: 115vw;
+    background-size: 2175px;
     z-index: 10;
     height: 72vh;
-    width: 100vw;
+    width: 1895px;
 }
 
 #main #section3 #patEatMenu1 #catEatMenu h2 {
     margin-left: 365px;
     font-size: 42px;
     font-weight: bold;
-    width: 380px;
+    width: 400px;
     height: 58px;
     position: relative;
 
@@ -630,18 +685,19 @@ body {
 
 }
 
-#main #section3 #patEatMenu1 ul {
+#main #section3 #patEatMenu1 .eatMenu {
     display: flex;
     width: 100vw;
     position: relative;
     left: 340px;
-    gap: 40px;
+    top: 25px;
 }
 
 #main #section3 #patEatMenu1 ul li {
     width: 300px;
     height: 550px;
     margin-top: 105px;
+    margin-left: 50px;
 }
 
 #main #section3 #patEatMenu1 ul li img {
@@ -656,6 +712,7 @@ body {
 
 #main #section3 #patEatMenu1 ul li:nth-child(1) {
     margin-top: 30px;
+    margin-left: 0;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(3) img {
@@ -678,7 +735,8 @@ body {
 
 #main #section3 #patEatMenu1 ul li div {
     margin-top: 85px;
-    margin-left: 25px;
+    margin-left: 15px;
+    width: 105%;
 }
 
 #main #section3 #patEatMenu1 ul li .eatList1 {
@@ -728,11 +786,11 @@ body {
 }
 
 #main #section3 #patEatMenu1 .section3Footer {
-    width: 120%;
+    width: 115%;
     height: 310px;
     position: absolute;
-    bottom: 0;
-    left: -180px;
+    bottom: -25px;
+    left: -130px;
     display: flex;
     justify-content: space-between;
     z-index: 5;
@@ -874,7 +932,7 @@ body {
     width: 830px;
     height: 300px;
     position: absolute;
-    bottom: 310px;
+    bottom: 355px;
     right: 130px;
 }
 
@@ -915,7 +973,7 @@ body {
     background-repeat: no-repeat;
     background-position: bottom;
     position: absolute;
-    top: 70px;
+    top: 20px;
     left: -50px;
     z-index: 11;
 
@@ -929,7 +987,7 @@ body {
     width: 390px;
     height: 305px;
     position: absolute;
-    bottom: 80px;
+    bottom: 150px;
     right: -15px;
     background-image: url(section2Img/tabelRight.png);
     background-repeat: no-repeat;
@@ -939,8 +997,332 @@ body {
 #main #section4 #section4Wrapper .section4Footer .s4FooterRight img {
     margin-left: 50px;
 }
+
 /* Section5 --------------------------- */
 #main #section5 {
     width: 100%;
+    height: 104vh;
+    background-image: url(section3Img/s3Bg.png);
+    background-repeat: no-repeat;
+    position: relative;
+    bottom: 135px;
+}
+
+#main #section5 .s5Wrapper {
+    display: flex;
+    width: 1000px;
+    height: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*  왼쪽 소개글 */
+#main #section5 .s5Wrapper .s5WrapperLeft {
+    width: 40%;
+    height: 100%;
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGnb h1 {
+    font-size: 43px;
+    font-weight: bold;
+    color: green;
+    line-height: 52px;
+    margin-bottom: 50px;
+    letter-spacing: -6px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGnb p {
+    color: rgb(66, 131, 66);
+    font-weight: bold;
+    line-height: 25px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGoing {
+    display: flex;
+    position: relative;
+    margin-top: 30px;
+    width: 405px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGoing p {
+    background-color: #fff;
+    color: green;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: -3px;
+    width: 290px;
+    height: 60px;
+    border: 1px solid gray;
+    border-radius: 40px;
+    text-align: center;
+    line-height: 60px;
+
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGoing p span {
+    margin-left: 10px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperLeft .clubGoing img {
+    position: absolute;
+    right: 45px;
+    bottom: 7px;
+    z-index: -1;
+    animation: catTail-ani 3s infinite;
+    transform-origin: left;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight {
+    width: 60%;
+    height: 88%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight li {
+    width: 240px;
+    height: 160px;
+    border-radius: 50%;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    border: 2px solid #000;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb1 {
+    background-color: rgb(59, 151, 204);
+    margin: 0 175px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb2 {
+    background-color: rgb(206, 178, 53);
+    margin-right: 80px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb3 {
+    background-color: rgb(204, 77, 77);
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight li svg {
+    width: 80px;
+    height: 50px;
+    position: absolute;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb1 svg {
+    transform: rotate(50deg);
+    right: -75px;
+    bottom: -25px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb2 svg {
+    transform: rotate(-50deg);
+    right: 50px;
+    top: -85px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb3 svg {
+    left: -90px;
+    top: 55px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight li img {
+    position: relative;
+    bottom: 90px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb1 img {
+    width: 280px;
+    height: 170px;
+    left: 10px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb2 img {
+    bottom: 80px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb3 img {
+    bottom: 100px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight li p {
+    color: #fff;
+    font-weight: bold;
+    font-size: 30px;
+    position: absolute;
+    bottom: 25px;
+    left: 50px;
+    letter-spacing: -1px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb1 p {
+    bottom: 35px;
+}
+
+#main #section5 .s5Wrapper .s5WrapperRight .s5Gnb3 p {
+    left: 65px;
+}
+
+#main #section5 .s5Footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background-color: rgb(129, 163, 81);
+    overflow: hidden;
+}
+#main #section5 .s5Footer .s5FooterBg{
+    width: 100%;
+    height: 120px;
+    border-radius: 45%;
+    background-color: rgb(243, 253, 229, 1);
+    position: absolute;
+    top: -60px;
+    left: 0;
+    border-bottom: 2px solid gray;
+}
+
+/* section6------------------------ */
+#main #section6 {
+    width: 100%;
     height: 100vh;
+    background-color: rgb(129, 163, 81);
+    position: relative;
+    bottom: 135px;
+}
+#main #section6 .S6Wrapper .S6WrapperUp {
+    display: flex;
+    width: 100vw;
+    height: 760px;
+    position: absolute;
+    top: 30px;
+    left: 0;
+}
+
+#main #section6 .S6WrapperUp li {
+    text-align: center;
+    margin: 0 10px;
+}
+
+#main #section6 .S6Wrapper .S6WrapperUp li img {
+    width: 100%;
+    height: 100%;
+}
+
+#main #section6 .S6Wrapper .S6WrapperUp .girl {
+    width: 438px;
+    height: 620px;
+    margin: 0 auto;
+    padding-left: 20px;
+}
+#main #section6 .S6Wrapper .S6WrapperUp .tolk {
+    width: 360px;
+    height: 170px;
+    position: absolute;
+    top: 0px;
+    left: 54%;
+    text-align: left;
+}
+
+#main #section6 .S6Wrapper .S6WrappgiterUp .tolk p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 1.5;
+    margin: 45px 55px;
+    width: 280px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.6);
+
+}
+#main #section6 .S6Wrapper .S6WrapperUp .tableSub {
+    background-image: url("mainImg/table2.png");
+    background-repeat: no-repeat;
+    width: 457px;
+    height: 340px;
+    position: absolute;
+    top: 170px;
+    right: 0;
+}
+
+#main #section6 .S6Wrapper .S6WrapperUp .rightSetting {
+    width: 362px;
+    height: 135px;
+    position: absolute;
+    top: 95px;
+    right: 0;
+    margin-right: 20px;
+    z-index: 8;
+}
+
+#main #section6 .S6Wrapper .S6WrapperUp .mainTable {
+    background-image: url("mainImg/tableMain.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 304px;
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    z-index: 22;
+    margin: 0;
+}
+
+/* section6 middle */
+#main #section6 .S6Wrapper .S6WrapperMiddle {
+    position: absolute;
+    top: 130px;
+    left: -35px;
+    display: flex;
+    width: 2065px;
+    height: 50%;
+    justify-content: space-between;
+}
+
+#main #section6 .S6Wrapper .S6WrapperMiddle .plantLeft1 {
+    width: 375px;
+    height: 400px;
+    z-index: 10;
+}
+
+#main #section6 .S6Wrapper .S6WrapperMiddle .plantRight1 {
+    width: 425px;
+    height: 350px;
+    margin-top: 110px;
+}
+
+#main #section .S6Wrapper .S6WrapperMiddle img {
+    width: 100%;
+    height: 100%;
+}
+
+/* section1 Down */
+#main #section6 .S6Wrapper .S6WrapperDown {
+    display: flex;
+    position: absolute;
+    left: -70px;
+    bottom: 0;
+    width: 108.2vw;
+    justify-content: space-between;
+    z-index: 23;
+}
+
+#main #section6 .S6Wrapper .S6WrapperDown li img {
+    width: 100%;
+    height: 100%;
+}
+
+#main #section6 .S6Wrapper .S6WrapperDown .plantLeft2 {
+    width: 220px;
+    height: 570px;
+}
+
+#main #section6 .S6Wrapper .S6WrapperDown .plantRight2 {
+    width: 285px;
+    height: 455px;
+    margin-top: 35px;
 }

@@ -1,0 +1,15 @@
+/* section5 고양이 꼬리 */
+@keyframes catTail-ani  {
+    0% {
+        transform: rotate(-15deg);
+    }
+    50%{
+        transform: rotate(30deg);
+        
+    }
+    100% {
+        transform: rotate(-15deg);
+        
+    }
+
+}
