@@ -149,3 +149,20 @@ window.addEventListener("touchend", (e) => {
   const direction = deltaY > 0 ? "down" : "up";
   handleScroll(direction);
 });
+//  section2 슬라이더
+  const slider = document.getElementById('ratingSlider');
+  const items = document.querySelectorAll('.eatMenu li');
+
+  slider.addEventListener('input', function () {
+    const selectedRating = parseFloat(this.value);
+
+    items.forEach(item => {
+      const rating = parseFloat(item.querySelector('.rating').innerText);
+      if (rating >= selectedRating) {
+        item.style.display = 'flex'; // 또는 block, 원하는 layout에 따라 조절
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  });
+

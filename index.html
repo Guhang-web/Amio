@@ -86,7 +86,7 @@
         <section id="section2">
             <div id="patEatMenu">
                 <div id="dogEatMenu">
-                    <input type="range" min="0" max="100" value="0" class="custom-slider">
+                    <input type="range" id="rationgSlider" min="0" max="5" step="0.1" value="0" class="custom-slider">
                     <h2>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="70" fill="yellowgreen"
                             class="bi bi-bookmark-fill" viewBox="0 0 15 12 ">
@@ -96,7 +96,7 @@
                         <span>강아지 대표메뉴</span>
                     </h2>
                     <ul class="eatMenu">
-                        <li>
+                        <li data-rating="4.5">
                             <img src="section1Img/eat1.png" alt="먹이1">
                             <div>
                                 <p class="eatList1">주식</p>
@@ -107,7 +107,7 @@
                                         <path
                                             d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
                                     </svg>
-                                    <span style="margin-right: 10px;"> 4.5</span>
+                                    <span style="margin-right: 10px;" class="rating"> 4.5</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green"
                                         class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
                                         <path
