@@ -12,12 +12,14 @@ let profileStage = 0;
 function showDogProfile() {
   const dog = document.getElementById("dogProfile");
   dog.classList.add("show");
+  document.querySelector('.S1WrapperMiddle').style.zIndex = "10";
 }
 
 // catProfile 보여주기 (부드럽게)
 function showCatProfile() {
   const cat = document.getElementById("catProfile");
   cat.classList.add("show");
+  document.querySelector('.S1WrapperMiddle').style.zIndex = "10";
 }
 
 // catProfile 숨기기
@@ -149,20 +151,26 @@ window.addEventListener("touchend", (e) => {
   const direction = deltaY > 0 ? "down" : "up";
   handleScroll(direction);
 });
-//  section2 슬라이더
-  const slider = document.getElementById('ratingSlider');
-  const items = document.querySelectorAll('.eatMenu li');
+// section2 DogEat 슬라이더
+const slider1 = document.getElementById("rationgSlider1");
+const menu1 = document.querySelector(".eatMenu");
 
-  slider.addEventListener('input', function () {
-    const selectedRating = parseFloat(this.value);
+slider1.addEventListener("input", function () {
+  const index = parseInt(slider1.value, 10);
+  const itemWidth = 85; // width 값 따라서 슬라이더 구간 길이 조절
+  const offset = -index * itemWidth;
 
-    items.forEach(item => {
-      const rating = parseFloat(item.querySelector('.rating').innerText);
-      if (rating >= selectedRating) {
-        item.style.display = 'flex'; // 또는 block, 원하는 layout에 따라 조절
-      } else {
-        item.style.display = 'none';
-      }
+  menu1.style.transform = `translateX(${offset}px)`;
+});
+
+// section3 CatEat 슬라이더
+    const slider = document.getElementById('rationgSlider2');
+    const eatMenu = document.querySelector('.eatMenu1');
+
+    slider.addEventListener('input', function () {
+        const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
+        const value = this.value; // 0 ~ 100
+        const translateX = (value / 30) * maxTranslate;
+
+        eatMenu.style.transform = `translateX(-${translateX}px)`;
     });
-  });
-

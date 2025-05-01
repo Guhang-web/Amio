@@ -1,6 +1,6 @@
 body {
     overflow-x: hidden;
-    /* overflow-y: hidden; */
+    overflow-y: hidden;
 }
 
 #main {
@@ -155,7 +155,7 @@ body {
     position: absolute;
     top: -45px;
     right: 58%;
-    z-index: 22;
+    z-index: 9;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp .girl {
@@ -193,7 +193,7 @@ body {
     right: 0;
     margin-right: 19%;
     cursor: pointer;
-    z-index: 20;
+    z-index: 9;
 
 }
 
@@ -245,7 +245,7 @@ body {
 #main #section1 .S1Wrapper .S1WrapperMiddle .plantLeft1 {
     width: 375px;
     height: 400px;
-    z-index: 10;
+    z-index: 8;
 }
 
 #main #section1 .S1Wrapper .S1WrapperMiddle .plantRight1 {
@@ -300,6 +300,7 @@ body {
     transform: translateX(-50px);
     /* 왼쪽에서 이동해오는 느낌 */
     transition: opacity 0.8s ease, transform 0.8s ease;
+    
 }
 
 #main #section1 #dogProfile ul {
@@ -397,6 +398,7 @@ body {
     top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
+
 }
 
 #main #section1 #catProfile ul .IdCard {
@@ -495,7 +497,10 @@ body {
     left: 0;
     z-index: 10;
     height: 72vh;
-    width: 1895px;
+    width: 100vw;
+}
+#main #section2 #patEatMenu #dogEatMenu .slider-wrapper{
+width: 100%;
 }
 
 .custom-slider {
@@ -559,17 +564,21 @@ body {
 
 #main #section2 #patEatMenu .eatMenu {
     display: flex;
-    width: 100vw;
+    width: max-content;
     position: relative;
     left: 340px;
     top: 25px;
     gap: 20px;
+    z-index: 11;
+    transition: transform 0.3s ease;
 }
 
-#main #section2 #patEatMenu ul li {
+#main #section2 #patEatMenu ul .menuList1 {
     width: 300px;
+    min-width: 300px;
     height: 550px;
     margin-top: 105px;
+    margin-right: 10px;
 }
 
 #main #section2 #patEatMenu ul li img {
@@ -660,7 +669,7 @@ body {
     background-size: 2175px;
     z-index: 10;
     height: 72vh;
-    width: 1895px;
+    width: 100vw;
 }
 
 #main #section3 #patEatMenu1 #catEatMenu h2 {
@@ -682,19 +691,26 @@ body {
 #main #section3 #patEatMenu1 h2 svg {
     stroke: #000;
     stroke-width: 1px;
-
+    
+}
+#main #section3 #patEatMenu1 #catEatMenu .slider-wrapper1{
+width: 100%;
 }
 
-#main #section3 #patEatMenu1 .eatMenu {
+#main #section3 #patEatMenu1 .eatMenu1 {
+
     display: flex;
-    width: 100vw;
+    width: max-content;
     position: relative;
     left: 340px;
     top: 25px;
+    z-index: 11;
+    transition: transform 0.3s ease;
 }
 
 #main #section3 #patEatMenu1 ul li {
     width: 300px;
+    min-width: 300px;
     height: 550px;
     margin-top: 105px;
     margin-left: 50px;
