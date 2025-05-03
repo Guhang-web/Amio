@@ -497,6 +497,7 @@ body {
     bottom: 55px;
     left: 0;
     z-index: 10;
+    /* px로 맞추기 */
     height: 72vh;
     width: 100vw;
 }
@@ -585,12 +586,10 @@ body {
 
 #main #section2 #patEatMenu ul li img {
     width: 290px;
-    height: 367px;
 }
 
 #main #section2 #patEatMenu ul li:nth-child(1) img {
     width: 274px;
-    height: 443px;
 }
 
 #main #section2 #patEatMenu ul li:nth-child(1) {
@@ -721,12 +720,10 @@ body {
 
 #main #section3 #patEatMenu1 ul li img {
     width: 290px;
-    height: 367px;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(1) img {
     width: 274px;
-    height: 443px;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(1) {
