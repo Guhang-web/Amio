@@ -1,11 +1,12 @@
 body {
     overflow-x: hidden;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
 #main {
     position: relative;
     width: 100%;
+    height: 6661px;
 }
 
 /*  Section1 */
@@ -1212,7 +1213,8 @@ body {
     position: relative;
     bottom: 135px;
 }
-#main #section6 .S6Wrapper{
+
+#main #section6 .S6Wrapper {
     width: 100%;
     height: 100%;
     position: relative;
@@ -1222,9 +1224,9 @@ body {
 #main #section6 .S6Wrapper .S6WrapperUp {
     display: flex;
     width: 100vw;
-    height: 770px;
+    height: 810px;
     position: absolute;
-    top: 30px;
+    bottom: 0;
     left: 0;
 }
 
@@ -1240,30 +1242,30 @@ body {
 
 #main #section6 .S6Wrapper .S6WrapperUp .girl {
     width: 445px;
-    height: 620px;
+    height: 650px;
     margin: 0 auto;
     padding-left: 20px;
 }
 
 #main #section6 .S6Wrapper .S6WrapperUp .tolk {
     width: 360px;
-    height: 170px;
+    height: 160px;
     position: absolute;
     top: 0px;
     left: 54%;
     text-align: left;
 }
 
-#main #section6 .S6Wrapper .S6WrappgiterUp .tolk p {
+#main #section6 .S6Wrapper .S6WrapperUp .tolk p {
     position: absolute;
     top: 0;
     left: 0;
     line-height: 1.5;
-    margin: 45px 55px;
+    margin: 45px 75px;
     width: 280px;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.6);
-    
+
 }
 
 #main #section6 .S6Wrapper .S6WrapperUp .tableSub {
@@ -1272,7 +1274,7 @@ body {
     width: 457px;
     height: 340px;
     position: absolute;
-    top: 170px;
+    top: 260px;
     right: 0;
 }
 
@@ -1280,7 +1282,7 @@ body {
     width: 362px;
     height: 135px;
     position: absolute;
-    top: 95px;
+    top: 185px;
     right: 0;
     margin-right: 20px;
     z-index: 8;
@@ -1292,51 +1294,78 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: 304px;
+    height: 340px;
     position: absolute;
-    bottom: 0px;
+    bottom: -80px;
     left: 0;
     z-index: 12;
     margin: 0;
 }
+
 /* 리뷰 카드 */
-#main #section6 .S6Wrapper .review{
+#main #section6 .S6Wrapper .review {
     width: 85%;
     height: 65vh;
     position: relative;
-    top: 61%;
+    top: 75%;
     left: 52%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     display: flex;
     /* overflow: hidden; */
     z-index: 30;
 }
-#main #section6 .S6Wrapper .review li{
+
+#main #section6 .S6Wrapper .review li {
     width: 330px;
     height: 390px;
     position: relative;
 }
-#main #section6 .S6Wrapper .review .animalReview1{
+
+#main #section6 .S6Wrapper .review .animalReview1 {
     transform: rotate(-25deg);
-    margin-top: 170px;
-}
-#main #section6 .S6Wrapper .review .animalReview2{
-    transform: rotate(-10deg);
-    margin-left: -40px;
-    margin-top: 55px;
-    
-}
-#main #section6 .S6Wrapper .review .animalReview3{
-margin-left: -25px;
+    margin-top: 185px;
 }
 
-#main #section6 .S6Wrapper .review li h6{
+#main #section6 .S6Wrapper .review .animalReview2 {
+    transform: rotate(-13deg);
+    margin-left: -40px;
+    margin-top: 55px;
+
+}
+
+#main #section6 .S6Wrapper .review .animalReview3 {
+    margin-left: -25px;
+    z-index: 10;
+}
+
+#main #section6 .S6Wrapper .review .animalReview4 {
+    transform: rotate(13deg);
+    margin-left: -20px;
+    margin-top: 60px;
+    z-index: 8;
+}
+
+#main #section6 .S6Wrapper .review .animalReview5 {
+    transform: rotate(25deg);
+    margin-left: -50px;
+    margin-top: 180px;
+}
+
+#main #section6 .S6Wrapper .review .animalReview6 {
+    transform: rotate(25deg);
+    margin-left: -50px;
+    margin-top: 180px;
+    display: none;
+}
+
+#main #section6 .S6Wrapper .review li h6 {
     position: absolute;
     top: 17px;
     left: 40px;
     font-size: 25px;
 }
-#main #section6 .S6Wrapper .review li p{
+
+#main #section6 .S6Wrapper .review li p {
     font-size: 20px;
     font-weight: bold;
     position: absolute;
@@ -1348,10 +1377,10 @@ margin-left: -25px;
 /* section6 middle */
 #main #section6 .S6Wrapper .S6WrapperMiddle {
     position: absolute;
-    top: 130px;
-    left: -35px;
+    top: 315px;
+    left: -45px;
     display: flex;
-    width: 2065px;
+    width: 2080px;
     height: 50%;
     justify-content: space-between;
 }
@@ -1365,7 +1394,7 @@ margin-left: -25px;
 #main #section6 .S6Wrapper .S6WrapperMiddle .plantRight1 {
     width: 425px;
     height: 350px;
-    margin-top: 110px;
+    margin-top: 130px;
 }
 
 #main #section .S6Wrapper .S6WrapperMiddle img {
@@ -1378,7 +1407,7 @@ margin-left: -25px;
     display: flex;
     position: absolute;
     left: -70px;
-    bottom: 10px;
+    bottom: -200px;
     width: 106.5vw;
     justify-content: space-between;
     z-index: 23;
@@ -1395,9 +1424,9 @@ margin-left: -25px;
 }
 
 #main #section6 .S6Wrapper .S6WrapperDown .plantRight2 {
-    width: 285px;
+    width: 315px;
     height: 455px;
-    margin-top: 35px;
+    margin-top: 45px;
 }
 
 /* footer */
@@ -1405,7 +1434,7 @@ margin-left: -25px;
     width: 100vw;
     height: 100vh;
     position: relative;
-    bottom: 645px;
+    bottom: 420px;
     z-index: 20;
 }
 
@@ -1415,4 +1444,64 @@ margin-left: -25px;
     background-image: url('footerImg/footerBg.png');
     background-position: top center;
     background-repeat: no-repeat;
+}
+
+#footer #footerWrapper .footerUp {
+    position: absolute;
+    top: 40%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#footer #footerWrapper .footerMiddle {
+    width: 57%;
+    height: 75px;
+    position: absolute;
+    bottom: 37%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    color: #fff;
+}
+
+#footer #footerWrapper .footerMiddle li {
+    margin-top: 30px;
+    margin-left: 55px;
+}
+#footer #footerWrapper .footerMiddle li:nth-child(1){
+    margin-left: 100px;
+}
+#footer #footerWrapper .footerIcon{
+    width: 200px;
+    height: 70px;
+    position: absolute;
+    bottom: 25%;
+    left: 0;
+    right: 4%;
+    margin: 0 auto;
+    display: flex;
+}
+#footer #footerWrapper .footerIcon li{
+    margin-left: 30px;
+}
+#footer #footerWrapper .footerIcon li svg{
+    width: 30px;
+    height: 30px;
+}
+#footer #footerWrapper .footerDown{
+    width: 455px;
+    height: 100px;
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 1%;
+    margin: 0 auto;
+    text-align: center;
+}
+#footer #footerWrapper .footerDown p{
+    color: #fff;
+    margin-top: 15px;
 }
