@@ -1023,6 +1023,7 @@ body {
     height: 104vh;
     background-image: url(section3Img/s3Bg.png);
     background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
     bottom: 135px;
 }
