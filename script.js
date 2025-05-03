@@ -219,3 +219,11 @@ window.addEventListener('load', function () {
     behavior: 'smooth'
   });
 });
+
+// 메뉴 클릭시 section 이동
+function scrollToSection(sectionId) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
