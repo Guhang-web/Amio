@@ -174,3 +174,4 @@ slider1.addEventListener("input", function () {
 
         eatMenu.style.transform = `translateX(-${translateX}px)`;
     });
+// section4 Click 이벤트
