@@ -128,7 +128,7 @@ body {
     bottom: 30px;
     width: 100vw;
     min-width: 1920px;
-    height: 93%;
+    height: 921px;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp {
@@ -142,7 +142,6 @@ body {
 
 #main #section1 .S1Wrapper .S1WrapperUp li {
     text-align: center;
-    margin: 0 10px;
 }
 
 #main #section1 .S1Wrapper .S1WrapperUp li img {
@@ -273,7 +272,6 @@ body {
 
 #main #section1 .S1Wrapper .S1WrapperDown li img {
     width: 100%;
-    height: 100%;
 }
 
 #main #section1 .S1Wrapper .S1WrapperDown .plantLeft2 {
@@ -479,6 +477,7 @@ body {
 #main #section2 {
     background-color: rgba(212, 235, 179, 1);
     height: 100vh;
+    min-height: 953px;
     width: 100%;
     position: relative;
 }
@@ -498,12 +497,18 @@ body {
     left: 0;
     z-index: 10;
     /* px로 맞추기 */
-    height: 72vh;
+    height: 686px;
     width: 100vw;
 }
 
 #main #section2 #patEatMenu #dogEatMenu .slider-wrapper {
     width: 100%;
+    height: 705px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: nowrap;
+    cursor: grab;
 }
 
 .custom-slider {
@@ -595,6 +600,12 @@ body {
 #main #section2 #patEatMenu ul li:nth-child(1) {
     margin-top: 30px;
 }
+#main #section2 #patEatMenu ul li:nth-child(2) {
+    margin-top: 115px;
+}
+#main #section2 #patEatMenu ul li:nth-child(6) {
+margin-top: -40px;
+}
 
 #main #section2 #patEatMenu ul li div {
     margin-top: 86px;
@@ -651,6 +662,7 @@ body {
 #main #section3 {
     background-color: rgba(212, 235, 179, 1);
     height: 100vh;
+    min-height: 953px;
     width: 100%;
     position: relative;
 }
@@ -669,7 +681,7 @@ body {
     left: 0;
     background-size: 2175px;
     z-index: 10;
-    height: 72vh;
+    height: 686px;
     width: 100vw;
 }
 
@@ -721,32 +733,28 @@ body {
 #main #section3 #patEatMenu1 ul li img {
     width: 290px;
 }
-
-#main #section3 #patEatMenu1 ul li:nth-child(1) img {
-    width: 274px;
-}
-
 #main #section3 #patEatMenu1 ul li:nth-child(1) {
-    margin-top: 30px;
+    margin-top: 105px;
     margin-left: 0;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(3) img {
     width: 274px;
-    height: 443px;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(3) {
-    margin-top: 30px;
+    margin-top: 45px;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(5) img {
     width: 274px;
-    height: 443px;
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(5) {
-    margin-top: 30px;
+    margin-top: 45px;
+}
+#main #section3 #patEatMenu1 ul li:nth-child(6) {
+    margin-top: -40px;
 }
 
 #main #section3 #patEatMenu1 ul li div {
@@ -816,6 +824,7 @@ body {
 #main #section4 {
     background-color: rgba(212, 235, 179, 1);
     height: 135vh;
+    min-height: 1286px;
     width: 100%;
     position: relative;
 }
@@ -1018,6 +1027,7 @@ body {
 #main #section5 {
     width: 100%;
     height: 104vh;
+    min-height: 991px;
     background-image: url(section3Img/s3Bg.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -1207,6 +1217,7 @@ body {
 #main #section6 {
     width: 100%;
     height: 100vh;
+    min-height: 953px;
     background-color: rgb(129, 163, 81);
     position: relative;
     bottom: 135px;
@@ -1230,12 +1241,10 @@ body {
 
 #main #section6 .S6WrapperUp li {
     text-align: center;
-    margin: 0 10px;
 }
 
 #main #section6 .S6Wrapper .S6WrapperUp li img {
     width: 100%;
-    height: 100%;
 }
 
 #main #section6 .S6Wrapper .S6WrapperUp .girl {
@@ -1432,6 +1441,7 @@ body {
 #footer {
     width: 100vw;
     height: 100vh;
+    min-height: 953px;
     position: relative;
     bottom: 420px;
     z-index: 20;

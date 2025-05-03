@@ -151,19 +151,53 @@ window.addEventListener("touchend", (e) => {
   const direction = deltaY > 0 ? "down" : "up";
   handleScroll(direction);
 });
-// section2 DogEat 슬라이더
-const slider1 = document.getElementById("rationgSlider1");
-const menu1 = document.querySelector(".eatMenu");
+// section2 DogEat 드래그 슬라이더
+    const sliderWrapper = document.querySelector('.slider-wrapper');
 
-slider1.addEventListener("input", function () {
-  const index = parseInt(slider1.value, 10);
-  const itemWidth = 85; // width 값 따라서 슬라이더 구간 길이 조절
-  const offset = -index * itemWidth;
+    let isDown = false;
+    let startX;
+    let scrollLeft;
 
-  menu1.style.transform = `translateX(${offset}px)`;
-});
+    sliderWrapper.addEventListener('mousedown', (e) => {
+        isDown = true;
+        sliderWrapper.classList.add('active');
+        startX = e.pageX - sliderWrapper.offsetLeft;
+        scrollLeft = sliderWrapper.scrollLeft;
+    });
 
-// section3 CatEat 슬라이더
+    sliderWrapper.addEventListener('mouseleave', () => {
+        isDown = false;
+        sliderWrapper.classList.remove('active');
+    });
+
+    sliderWrapper.addEventListener('mouseup', () => {
+        isDown = false;
+        sliderWrapper.classList.remove('active');
+    });
+
+    sliderWrapper.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - sliderWrapper.offsetLeft;
+        const walk = (x - startX) * 0.5; // 스크롤 속도 조절
+        sliderWrapper.scrollLeft = scrollLeft - walk;
+    });
+// section2 DogEat 슬라이더 (input)
+    const rangeSlider = document.getElementById('rationgSlider1');
+
+    rangeSlider.addEventListener('input', () => {
+        const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
+        sliderWrapper.scrollLeft = (rangeSlider.value / 5) * maxScroll;
+    });
+
+    sliderWrapper.addEventListener('scroll', () => {
+        const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
+        rangeSlider.value = (sliderWrapper.scrollLeft / maxScroll) * 5;
+    });
+
+
+// section3 CatEat 슬라이더 (드래그)
+
     const slider = document.getElementById('rationgSlider2');
     const eatMenu = document.querySelector('.eatMenu1');
 
