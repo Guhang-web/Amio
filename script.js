@@ -209,3 +209,13 @@ window.addEventListener("touchend", (e) => {
         eatMenu.style.transform = `translateX(-${translateX}px)`;
     });
 // section4 Click 이벤트
+
+
+// 새로고침시 최상단으로 이동
+window.addEventListener('load', function () {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth'
+  });
+});
