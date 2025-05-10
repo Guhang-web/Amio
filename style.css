@@ -715,7 +715,7 @@ margin-top: -40px;
 #main #section3 #patEatMenu1 .eatMenu1 {
 
     display: flex;
-    width: max-content;
+    width: 2400px;
     position: relative;
     left: 340px;
     top: 25px;
@@ -1321,6 +1321,8 @@ margin-top: -40px;
     margin: 0 auto;
     display: flex;
     z-index: 30;
+    cursor: grab;
+    user-select: none;
 }
 
 #main #section6 .S6Wrapper .review li {
@@ -1328,6 +1330,7 @@ margin-top: -40px;
     height: 390px;
     position: relative;
     cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
 #main #section6 .S6Wrapper .review .animalReview1 {
@@ -1358,12 +1361,27 @@ margin-top: -40px;
     transform: rotate(25deg);
     margin-left: -50px;
     margin-top: 180px;
+    z-index: 6;
 }
 
 #main #section6 .S6Wrapper .review .animalReview6 {
-    transform: rotate(25deg);
-    margin-left: -50px;
-    margin-top: 180px;
+    transform: rotate(35deg);
+    margin-left: -80px;
+    margin-top: 360px;
+    z-index: 5;
+    display: none;
+}
+#main #section6 .S6Wrapper .review .animalReview7 {
+    transform: rotate(45deg);
+    margin-left: -110px;
+    margin-top: 570px;
+    z-index: 4;
+    display: none;
+}
+#main #section6 .S6Wrapper .review .animalReview8 {
+    transform: rotate(55deg);
+    margin-left: -150px;
+    margin-top: 815px;
     display: none;
 }
 

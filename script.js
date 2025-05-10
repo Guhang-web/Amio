@@ -197,19 +197,138 @@ window.addEventListener("touchend", (e) => {
 
 
 // section3 CatEat 슬라이더 (드래그)
+const slider = document.getElementById('rationgSlider2');  // range input
+const eatMenu = document.querySelector('.eatMenu1');       // 메뉴 슬라이드 영역
 
-    const slider = document.getElementById('rationgSlider2');
-    const eatMenu = document.querySelector('.eatMenu1');
+let isDragging = false;       // 드래그 중 여부
+let startX1 = 0;               // 마우스 시작 위치 (x좌표)
+let scrollStart = 0;          // 드래그 시작 시 메뉴의 위치
+let currentValue = parseFloat(slider.value); // 현재 슬라이더 값 (0~100)
 
-    slider.addEventListener('input', function () {
-        const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
-        const value = this.value; // 0 ~ 100
-        const translateX = (value / 30) * maxTranslate;
+// ✅ 슬라이더 직접 조작 시 메뉴 이동
+slider.addEventListener('input', function () {
+    currentValue = parseFloat(this.value);
+    scrollEatMenu(currentValue);
+});
 
-        eatMenu.style.transform = `translateX(-${translateX}px)`;
-    });
+// ✅ 슬라이더 값(0~100)을 기반으로 메뉴 translateX 이동
+function scrollEatMenu(value) {
+    const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth; // 최대 이동 거리
+    const translateX = (value / parseFloat(slider.max)) * maxTranslate;  // 현재 슬라이더 비율만큼 이동
+    eatMenu.style.transform = `translateX(-${translateX}px)`; // 왼쪽으로 이동
+    slider.value = value; // 슬라이더 값 반영
+}
+
+// ✅ 마우스를 메뉴에 눌렀을 때: 드래그 시작
+eatMenu.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX1 = e.clientX; // 마우스 x좌표 기억
+    scrollStart = parseTransformX(eatMenu.style.transform); // 현재 위치 기억
+    eatMenu.style.cursor = 'grabbing'; // 커서 변경
+});
+
+// ✅ 마우스를 움직일 때: 드래그 진행
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return; // 드래그 상태 아니면 무시
+
+    const dx = e.clientX - startX1; // 움직인 거리
+    const speedFactor = 0.5; // 1.0 기본, >1 빠름, <1: 느림
+    const containerWidth = eatMenu.parentElement.offsetWidth;
+    const maxTranslate = eatMenu.scrollWidth - containerWidth;
+    let newTranslate = scrollStart - dx * speedFactor; // 새 위치 계산 (오른쪽 드래그 시 음수)
+
+    // 메뉴 이동 제한 (좌우 끝 벗어나지 않도록)
+    newTranslate = Math.max(0, Math.min(newTranslate, maxTranslate));
+
+    // 메뉴 위치 이동
+    eatMenu.style.transform = `translateX(-${newTranslate}px)`;
+
+    // 슬라이더 위치 동기화
+    currentValue = (newTranslate / maxTranslate) * parseFloat(slider.max);
+    slider.value = currentValue;
+});
+
+// ✅ 마우스 버튼을 뗐을 때: 드래그 종료
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        eatMenu.style.cursor = 'grab'; // 커서 되돌리기
+    }
+});
+
+// ✅ 기본 커서 스타일 설정
+eatMenu.style.cursor = 'grab';
+
+// ✅ 현재 transform 속성에서 translateX(px) 값만 숫자로 추출
+function parseTransformX(transform) {
+    const match = /translateX\(-?([\d.]+)px\)/.exec(transform);
+    return match ? parseFloat(match[1]) : 0;
+}
+
+
+
 // section4 Click 이벤트
 
+
+// section5 리뷰 드래그 이벤트
+const slider5 = document.getElementById("slider");
+let isDown5 = false;
+let startX5;
+let scrollLeft5;
+
+slider5.addEventListener("mousedown", (e) => {
+  isDown5 = true;
+  slider5.classList.add("active");
+  startX5 = e.pageX - slider5.offsetLeft;
+  scrollLeft5 = slider5.scrollLeft;
+});
+
+slider5.addEventListener("mouseleave", () => {
+  isDown5 = false;
+});
+
+slider5.addEventListener("mouseup", () => {
+  isDown5 = false;
+});
+
+slider5.addEventListener("mousemove", (e) => {
+  if (!isDown5) return;
+  e.preventDefault();
+  const x = e.pageX - slider5.offsetLeft;
+  const walk = (x - startX5) * 2;
+  slider5.scrollLeft = scrollLeft5 - walk;
+  checkVisibleItems();
+});
+
+function checkVisibleItems() {
+  const containerLeft = slider5.scrollLeft;
+  const containerRight = containerLeft + slider5.offsetWidth;
+
+  document.querySelectorAll(".review li").forEach((item) => {
+    const itemLeft = item.offsetLeft;
+    const itemRight = itemLeft + item.offsetWidth;
+
+    if (
+      itemRight > containerLeft &&
+      itemLeft < containerRight &&
+      (item.classList.contains("animalReview6") ||
+       item.classList.contains("animalReview7") ||
+       item.classList.contains("animalReview8"))
+    ) {
+      item.style.display = "block";
+    } else if (
+      item.classList.contains("animalReview6") ||
+      item.classList.contains("animalReview7") ||
+      item.classList.contains("animalReview8")
+    ) {
+      item.style.display = "none";
+    } else {
+      item.style.display = "block";
+    }
+  });
+}
+
+window.addEventListener("load", checkVisibleItems);
 
 // 새로고침시 최상단으로 이동
 window.addEventListener('load', function () {
