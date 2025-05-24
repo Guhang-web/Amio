@@ -1317,7 +1317,6 @@ body {
 
 /* 리뷰 카드 */
 #main #section6 .S6Wrapper #slider {
-    overflow-x: scroll;
     display: flex;
     cursor: grab;
     user-select: none;
@@ -1327,7 +1326,7 @@ body {
     height: 65vh;
     position: relative;
     top: 43%;
-    left: 7%;
+    left: 6%;
     z-index: 30;
 }
 
@@ -1513,6 +1512,8 @@ body {
 #footer #footerWrapper .footerMiddle li {
     margin-top: 30px;
     margin-left: 55px;
+    cursor: pointer;
+    height: 20px;
 }
 
 #footer #footerWrapper .footerMiddle li:nth-child(1) {
@@ -1531,7 +1532,9 @@ body {
 }
 
 #footer #footerWrapper .footerIcon li {
+    cursor: pointer;
     margin-left: 30px;
+    height: 30px;
 }
 
 #footer #footerWrapper .footerIcon li svg {
