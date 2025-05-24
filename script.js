@@ -271,64 +271,7 @@ function parseTransformX(transform) {
 
 
 // section5 리뷰 드래그 이벤트
-const slider5 = document.getElementById("slider");
-let isDown5 = false;
-let startX5;
-let scrollLeft5;
 
-slider5.addEventListener("mousedown", (e) => {
-  isDown5 = true;
-  slider5.classList.add("active");
-  startX5 = e.pageX - slider5.offsetLeft;
-  scrollLeft5 = slider5.scrollLeft;
-});
-
-slider5.addEventListener("mouseleave", () => {
-  isDown5 = false;
-});
-
-slider5.addEventListener("mouseup", () => {
-  isDown5 = false;
-});
-
-slider5.addEventListener("mousemove", (e) => {
-  if (!isDown5) return;
-  e.preventDefault();
-  const x = e.pageX - slider5.offsetLeft;
-  const walk = (x - startX5) * 2;
-  slider5.scrollLeft = scrollLeft5 - walk;
-  checkVisibleItems();
-});
-
-function checkVisibleItems() {
-  const containerLeft = slider5.scrollLeft;
-  const containerRight = containerLeft + slider5.offsetWidth;
-
-  document.querySelectorAll(".review li").forEach((item) => {
-    const itemLeft = item.offsetLeft;
-    const itemRight = itemLeft + item.offsetWidth;
-
-    if (
-      itemRight > containerLeft &&
-      itemLeft < containerRight &&
-      (item.classList.contains("animalReview6") ||
-       item.classList.contains("animalReview7") ||
-       item.classList.contains("animalReview8"))
-    ) {
-      item.style.display = "block";
-    } else if (
-      item.classList.contains("animalReview6") ||
-      item.classList.contains("animalReview7") ||
-      item.classList.contains("animalReview8")
-    ) {
-      item.style.display = "none";
-    } else {
-      item.style.display = "block";
-    }
-  });
-}
-
-window.addEventListener("load", checkVisibleItems);
 
 // 새로고침시 최상단으로 이동
 window.addEventListener('load', function () {
@@ -340,9 +283,9 @@ window.addEventListener('load', function () {
 });
 
 // 메뉴 클릭시 section 이동
-function scrollToSection(sectionId) {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-}
+function scrollTosection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+};
