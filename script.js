@@ -5,7 +5,7 @@ let currentSection = 1;
 let isScrolling = false;
 
 // dogProfile, catProfile 상태 기록
-// 0: 아무것도 안 나옴, 1: dogProfile만 나옴, 2: catProfile까지 나옴
+// // 0: 아무것도 안 나옴, 1: dogProfile만 나옴, 2: catProfile까지 나옴
 let profileStage = 0;
 
 // dogProfile 보여주기 (부드럽게)
@@ -51,6 +51,8 @@ function handleScroll(direction) {
       if (profileStage === 0) {
         // dogProfile 처음 등장
         showDogProfile();
+        document.getElementById('dogThumbnail').click(); // 자동으로 이동 애니메이션 실행
+
         profileStage++;
       } else if (profileStage === 1) {
         // catProfile 등장
@@ -131,10 +133,86 @@ function handleScroll(direction) {
   }, 1000);
 }
 
+let clone = null;
+
+document.getElementById('dogThumbnail').addEventListener('click', () => {
+  const img = document.getElementById('dogThumbnail');
+  const finalContainer = document.getElementById('dogFinalPosition');
+  const profile = document.getElementById('dogProfile');
+
+  // profile 먼저 보여주기
+  profile.style.display = 'block';
+
+  // 복제 이미지 만들기
+  clone = img.cloneNode(true);
+  const startRect = img.getBoundingClientRect();
+  const endRect = finalContainer.getBoundingClientRect();
+
+  Object.assign(clone.style, {
+    position: 'fixed',
+    left: `${startRect.left}px`,
+    top: `${startRect.top}px`,
+    width: `${startRect.width}px`,
+    height: `${startRect.height}px`,
+    transition: 'all 0.8s ease',
+    zIndex: '9999',
+    pointerEvents: 'none'
+  });
+
+  document.body.appendChild(clone);
+
+  // 이미지 이동 애니메이션
+  requestAnimationFrame(() => {
+    clone.style.left = `${endRect.left}px`;
+    clone.style.top = `${endRect.top}px`;
+    clone.style.width = `${endRect.width}px`;
+    clone.style.height = `${endRect.height}px`;
+  });
+
+  // 원래 이미지 숨기기
+  img.style.visibility = 'hidden';
+});
+
+function hideDogProfile() {
+  const profile = document.getElementById("dogProfile");
+  profile.style.display = "none";
+
+  const img = document.getElementById('dogThumbnail');
+  if (clone) {
+    const startRect = img.getBoundingClientRect();
+
+    Object.assign(clone.style, {
+      transition: 'all 0.8s ease',
+      left: `${startRect.left}px`,
+      top: `${startRect.top}px`,
+      width: `${startRect.width}px`,
+      height: `${startRect.height}px`
+    });
+
+    setTimeout(() => {
+      if (clone && clone.parentElement) {
+        clone.remove(); // 복제 이미지 제거
+        clone = null;
+      }
+
+      // 원래 이미지 다시 보이기
+      img.style.visibility = 'visible';
+    }, 900);
+  } else {
+    // 만약 clone이 없으면 그냥 원래 이미지만 보여줘
+    img.style.visibility = 'visible';
+  }
+}
+
 // 휠(마우스 스크롤) 이벤트 감지
 window.addEventListener("wheel", (e) => {
   const direction = e.deltaY > 0 ? "down" : "up";
   handleScroll(direction);
+    if (e.deltaY < 0) {
+    // 위로 스크롤할 때 dogProfile 사라짐
+    hideDogProfile();
+  }
+  
 });
 
 // 터치(모바일 스크롤) 이벤트 감지
