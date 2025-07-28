@@ -1,369 +1,424 @@
-// 현재 어느 섹션에 있는지 기록 (1=section1, 2=section2, ..., 7=footer)
-let currentSection = 1;
-
-// 스크롤 중복 방지용 플래그
-let isScrolling = false;
-
-// dogProfile, catProfile 상태 기록
-// // 0: 아무것도 안 나옴, 1: dogProfile만 나옴, 2: catProfile까지 나옴
-let profileStage = 0;
-
-// dogProfile 보여주기 (부드럽게)
-function showDogProfile() {
-  const dog = document.getElementById("dogProfile");
-  dog.classList.add("show");
-  document.querySelector('.S1WrapperMiddle').style.zIndex = "10";
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
 }
+// ✅ 전역 상태 관리 변수들
+let currentSectionIndex = 0;
+let profileStage = 0; // 0: 아무것도 없음, 1: dogProfile, 2: catProfile
 
-// catProfile 보여주기 (부드럽게)
-function showCatProfile() {
-  const cat = document.getElementById("catProfile");
-  cat.classList.add("show");
-  document.querySelector('.S1WrapperMiddle').style.zIndex = "10";
-}
+// ✅ 요소들 참조
+const dogThumbnail = document.getElementById("dogThumbnail");
+const catThumbnail = document.getElementById("catThumbnail");
+const dogProfile = document.getElementById("dogProfile");
+const catProfile = document.getElementById("catProfile");
+const dogFinal = document.getElementById("dogFinalPosition");
+const catFinal = document.getElementById("catFinalPosition");
 
-// catProfile 숨기기
-function hideCatProfile() {
-  const cat = document.getElementById("catProfile");
-  cat.classList.remove("show");
-}
+// ✅ 복제된 이미지 참조용
+let dogClone = null;
+let catClone = null;
 
-// dogProfile 숨기기
-function hideDogProfile() {
-  const dog = document.getElementById("dogProfile");
-  dog.classList.remove("show");
-}
+// ✅ 새로고침 시 section1로 강제 이동
+window.addEventListener("load", () => {
+  document.getElementById("section1").scrollIntoView({ behavior: "auto" });
+});
 
-// 특정 섹션으로 스크롤 이동
-function scrollToSection(sectionId) {
-  document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
-}
+// ✅ 프로필 등장 애니메이션
+function animateToProfile(img, targetEl, profile, isDog) {
+  if (!img || !targetEl || !profile) return;
 
-// 메인 스크롤 제어 함수
-function handleScroll(direction) {
-  // 스크롤 중이라면 무시
-  if (isScrolling) return;
-  isScrolling = true;
+  profile.style.opacity = "1";
+  profile.style.visibility = "visible";
+  profile.style.zIndex = "20";
+  document.body.classList.add("profile-active");
 
-  if (currentSection === 1) {
-    // section1 안일 때
-    if (direction === "down") {
-      if (profileStage === 0) {
-        // dogProfile 처음 등장
-        showDogProfile();
-        document.getElementById('dogThumbnail').click(); // 자동으로 이동 애니메이션 실행
-
-        profileStage++;
-      } else if (profileStage === 1) {
-        // catProfile 등장
-        showCatProfile();
-        profileStage++;
-      } else if (profileStage === 2) {
-        // catProfile 사라지고 section2로 이동
-        hideCatProfile();
-        scrollToSection("section2");
-        currentSection = 2;
-        profileStage = 2; // stage는 유지
-      }
-    } else if (direction === "up") {
-      // 위로 스크롤할 때
-      if (profileStage === 2) {
-        hideCatProfile();
-        profileStage--;
-      } else if (profileStage === 1) {
-        hideDogProfile();
-        profileStage--;
-      }
-    }
-  } else if (currentSection === 2) {
-    if (direction === "down") {
-      scrollToSection("section3");
-      currentSection = 3;
-    } else if (direction === "up") {
-      scrollToSection("section1");
-      currentSection = 1;
-      setTimeout(() => {
-        // section1 올라오면 catProfile 다시 등장
-        showCatProfile();
-        profileStage = 2;
-      }, 800); // 올라오는 스크롤 끝난 뒤
-    }
-  } else if (currentSection === 3) {
-    if (direction === "down") {
-      scrollToSection("section4");
-      currentSection = 4;
-    } else if (direction === "up") {
-      scrollToSection("section2");
-      currentSection = 2;
-    }
-  } else if (currentSection === 4) {
-    if (direction === "down") {
-      scrollToSection("section5");
-      currentSection = 5;
-    } else if (direction === "up") {
-      scrollToSection("section3");
-      currentSection = 3;
-    }
-  } else if (currentSection === 5) {
-    if (direction === "down") {
-      scrollToSection("section6");
-      currentSection = 6;
-    } else if (direction === "up") {
-      scrollToSection("section4");
-      currentSection = 4;
-    }
-  } else if (currentSection === 6) {
-    if (direction === "down") {
-      scrollToSection("footer");
-      currentSection = 7;
-    } else if (direction === "up") {
-      scrollToSection("section5");
-      currentSection = 5;
-    }
-  } else if (currentSection === 7) {
-    if (direction === "up") {
-      scrollToSection("section6");
-      currentSection = 6;
-    }
-  }
-
-  // 1초 뒤에 다시 스크롤 허용 (중복 방지용)
-  setTimeout(() => {
-    isScrolling = false;
-  }, 1000);
-}
-
-let clone = null;
-
-document.getElementById('dogThumbnail').addEventListener('click', () => {
-  const img = document.getElementById('dogThumbnail');
-  const finalContainer = document.getElementById('dogFinalPosition');
-  const profile = document.getElementById('dogProfile');
-
-  // profile 먼저 보여주기
-  profile.style.display = 'block';
-
-  // 복제 이미지 만들기
-  clone = img.cloneNode(true);
-  const startRect = img.getBoundingClientRect();
-  const endRect = finalContainer.getBoundingClientRect();
+  const clone = img.cloneNode(true);
+  const start = img.getBoundingClientRect();
+  const end = targetEl.getBoundingClientRect();
 
   Object.assign(clone.style, {
-    position: 'fixed',
-    left: `${startRect.left}px`,
-    top: `${startRect.top}px`,
-    width: `${startRect.width}px`,
-    height: `${startRect.height}px`,
-    transition: 'all 0.8s ease',
-    zIndex: '9999',
-    pointerEvents: 'none'
+    position: "fixed",
+    left: `${start.left}px`,
+    top: `${start.top}px`,
+    width: `${start.width}px`,
+    height: `${start.height}px`,
+    transition: "all 0.8s ease",
+    zIndex: 9999,
+    pointerEvents: "none"
   });
 
   document.body.appendChild(clone);
+  img.style.opacity = "0";
+  img.style.pointerEvents = "auto";
 
-  // 이미지 이동 애니메이션
   requestAnimationFrame(() => {
-    clone.style.left = `${endRect.left}px`;
-    clone.style.top = `${endRect.top}px`;
-    clone.style.width = `${endRect.width}px`;
-    clone.style.height = `${endRect.height}px`;
+    clone.style.left = `${end.left}px`;
+    clone.style.top = `${end.top}px`;
+    clone.style.width = `${end.width}px`;
+    clone.style.height = `${end.height}px`;
   });
 
-  // 원래 이미지 숨기기
-  img.style.visibility = 'hidden';
-});
-
-function hideDogProfile() {
-  const profile = document.getElementById("dogProfile");
-  profile.style.display = "none";
-
-  const img = document.getElementById('dogThumbnail');
-  if (clone) {
-    const startRect = img.getBoundingClientRect();
-
-    Object.assign(clone.style, {
-      transition: 'all 0.8s ease',
-      left: `${startRect.left}px`,
-      top: `${startRect.top}px`,
-      width: `${startRect.width}px`,
-      height: `${startRect.height}px`
-    });
-
-    setTimeout(() => {
-      if (clone && clone.parentElement) {
-        clone.remove(); // 복제 이미지 제거
-        clone = null;
-      }
-
-      // 원래 이미지 다시 보이기
-      img.style.visibility = 'visible';
-    }, 900);
-  } else {
-    // 만약 clone이 없으면 그냥 원래 이미지만 보여줘
-    img.style.visibility = 'visible';
-  }
+  if (isDog) dogClone = clone;
+  else catClone = clone;
 }
 
-// 휠(마우스 스크롤) 이벤트 감지
+// ✅ 프로필 복귀 애니메이션
+function restoreProfile(img, profile, clone, isDog) {
+  if (!img || !profile || !clone) return;
+
+  const start = img.getBoundingClientRect();
+  Object.assign(clone.style, {
+    left: `${start.left}px`,
+    top: `${start.top}px`,
+    width: `${start.width}px`,
+    height: `${start.height}px`
+  });
+
+  profile.style.opacity = "0";
+  profile.style.visibility = "hidden";
+  profile.style.zIndex = "-1";
+  document.body.classList.remove("profile-active");
+
+  setTimeout(() => {
+    clone.remove();
+    img.style.opacity = "1";
+    img.style.pointerEvents = "auto";
+    if (isDog) dogClone = null;
+    else catClone = null;
+  }, 800);
+}
+
+// ✅ 섹션 리스트
+const sectionList = [
+  "section1",
+  "section2",
+  "section3",
+  "section4",
+  "section5",
+  "section6",
+  "footer"
+];
+
+let isScrolling = false;
+
+// ✅ 휠 이벤트 처리
 window.addEventListener("wheel", (e) => {
-  const direction = e.deltaY > 0 ? "down" : "up";
-  handleScroll(direction);
-    if (e.deltaY < 0) {
-    // 위로 스크롤할 때 dogProfile 사라짐
-    hideDogProfile();
+  const currentSection = sectionList[currentSectionIndex];
+  const visibleSection = document.getElementById(currentSection);
+  if (currentSection !== 'footer' && (!visibleSection || !visibleSection.contains(document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)))) return;
+
+  e.preventDefault();
+  if (isScrolling) return;
+  isScrolling = true;
+
+  const isDown = e.deltaY > 0;
+
+  if (isDown) {
+    if (currentSectionIndex === 0 && profileStage === 0) {
+      animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
+      profileStage = 1;
+      isScrolling = false;
+    } else if (currentSectionIndex === 0 && profileStage === 1) {
+      restoreProfile(dogThumbnail, dogProfile, dogClone, true);
+      setTimeout(() => {
+        animateToProfile(catThumbnail, catFinal, catProfile, false);
+        profileStage = 2;
+        isScrolling = false;
+      }, 850);
+    } else if (currentSectionIndex === 0 && profileStage === 2) {
+      restoreProfile(catThumbnail, catProfile, catClone, false);
+      profileStage = 0;
+      setTimeout(() => {
+        currentSectionIndex++;
+        document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
+        isScrolling = false;
+      }, 850);
+    } else if (currentSectionIndex < sectionList.length - 1) {
+      currentSectionIndex++;
+      document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => { isScrolling = false; }, 1000);
+    } else {
+      isScrolling = false;
+    }
+  } else {
+    if (currentSectionIndex === 0 && profileStage === 2) {
+      restoreProfile(catThumbnail, catProfile, catClone, false);
+      profileStage = 1;
+      isScrolling = false;
+    } else if (currentSectionIndex === 0 && profileStage === 1) {
+      restoreProfile(dogThumbnail, dogProfile, dogClone, true);
+      profileStage = 0;
+      isScrolling = false;
+    } else if (currentSectionIndex > 0) {
+      currentSectionIndex--;
+      document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => { isScrolling = false; }, 1000);
+    } else {
+      isScrolling = false;
+    }
   }
-  
+}, { passive: false });
+
+// ✅ 썸네일 클릭 이벤트
+
+dogThumbnail.addEventListener("click", () => {
+  if (profileStage === 2) {
+    restoreProfile(catThumbnail, catProfile, catClone, false);
+    profileStage = 0;
+    setTimeout(() => {
+      animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
+      profileStage = 1;
+    }, 850);
+  } else if (profileStage === 1) {
+    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
+    profileStage = 0;
+  } else if (profileStage === 0) {
+    animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
+    profileStage = 1;
+  }
 });
 
-// 터치(모바일 스크롤) 이벤트 감지
-let touchStartY = 0;
-window.addEventListener("touchstart", (e) => {
-  touchStartY = e.touches[0].clientY;
-});
-window.addEventListener("touchend", (e) => {
-  const touchEndY = e.changedTouches[0].clientY;
-  const deltaY = touchStartY - touchEndY;
-
-  if (Math.abs(deltaY) < 50) return; // 너무 짧은 터치는 무시
-
-  const direction = deltaY > 0 ? "down" : "up";
-  handleScroll(direction);
+catThumbnail.addEventListener("click", () => {
+  if (profileStage === 1) {
+    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
+    profileStage = 0;
+    setTimeout(() => {
+      animateToProfile(catThumbnail, catFinal, catProfile, false);
+      profileStage = 2;
+    }, 850);
+  } else if (profileStage === 2) {
+    restoreProfile(catThumbnail, catProfile, catClone, false);
+    profileStage = 0;
+  } else if (profileStage === 0) {
+    animateToProfile(catThumbnail, catFinal, catProfile, false);
+    profileStage = 2;
+  }
 });
 // section2 DogEat 드래그 슬라이더
-    const sliderWrapper = document.querySelector('.slider-wrapper');
+const sliderWrapper = document.querySelector('.slider-wrapper');
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+let isDown = false;
+let startX;
+let scrollLeft;
 
-    sliderWrapper.addEventListener('mousedown', (e) => {
-        isDown = true;
-        sliderWrapper.classList.add('active');
-        startX = e.pageX - sliderWrapper.offsetLeft;
-        scrollLeft = sliderWrapper.scrollLeft;
-    });
+sliderWrapper.addEventListener('mousedown', (e) => {
+  isDown = true;
+  sliderWrapper.classList.add('active');
+  startX = e.pageX - sliderWrapper.offsetLeft;
+  scrollLeft = sliderWrapper.scrollLeft;
+});
 
-    sliderWrapper.addEventListener('mouseleave', () => {
-        isDown = false;
-        sliderWrapper.classList.remove('active');
-    });
+sliderWrapper.addEventListener('mouseleave', () => {
+  isDown = false;
+  sliderWrapper.classList.remove('active');
+});
 
-    sliderWrapper.addEventListener('mouseup', () => {
-        isDown = false;
-        sliderWrapper.classList.remove('active');
-    });
+sliderWrapper.addEventListener('mouseup', () => {
+  isDown = false;
+  sliderWrapper.classList.remove('active');
+});
 
-    sliderWrapper.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - sliderWrapper.offsetLeft;
-        const walk = (x - startX) * 0.5; // 스크롤 속도 조절
-        sliderWrapper.scrollLeft = scrollLeft - walk;
-    });
+sliderWrapper.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - sliderWrapper.offsetLeft;
+  const walk = (x - startX) * 0.5; // 스크롤 속도 조절
+  sliderWrapper.scrollLeft = scrollLeft - walk;
+});
 // section2 DogEat 슬라이더 (input)
-    const rangeSlider = document.getElementById('rationgSlider1');
+const rangeSlider = document.getElementById('rationgSlider1');
 
-    rangeSlider.addEventListener('input', () => {
-        const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
-        sliderWrapper.scrollLeft = (rangeSlider.value / 5) * maxScroll;
-    });
+rangeSlider.addEventListener('input', () => {
+  const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
+  sliderWrapper.scrollLeft = (rangeSlider.value / 5) * maxScroll;
+});
 
-    sliderWrapper.addEventListener('scroll', () => {
-        const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
-        rangeSlider.value = (sliderWrapper.scrollLeft / maxScroll) * 5;
-    });
+sliderWrapper.addEventListener('scroll', () => {
+  const maxScroll = sliderWrapper.scrollWidth - sliderWrapper.clientWidth;
+  rangeSlider.value = (sliderWrapper.scrollLeft / maxScroll) * 5;
+});
 
 
 // section3 CatEat 슬라이더 (드래그)
-const slider = document.getElementById('rationgSlider2');  // range input
-const eatMenu = document.querySelector('.eatMenu1');       // 메뉴 슬라이드 영역
+const slider = document.getElementById('rationgSlider2');
+const eatMenu = document.querySelector('.eatMenu1');
 
-let isDragging = false;       // 드래그 중 여부
-let startX1 = 0;               // 마우스 시작 위치 (x좌표)
-let scrollStart = 0;          // 드래그 시작 시 메뉴의 위치
-let currentValue = parseFloat(slider.value); // 현재 슬라이더 값 (0~100)
+let isDragging = false;
+let startX1 = 0;
+let scrollStart = 0;
+let currentValue = parseFloat(slider.value);
+let animationFrame = null;
 
-// ✅ 슬라이더 직접 조작 시 메뉴 이동
-slider.addEventListener('input', function () {
-    currentValue = parseFloat(this.value);
-    scrollEatMenu(currentValue);
+// 슬라이더 변경 시
+slider.addEventListener('input', () => {
+  currentValue = parseFloat(slider.value);
+  updateTranslate(currentValue);
 });
 
-// ✅ 슬라이더 값(0~100)을 기반으로 메뉴 translateX 이동
-function scrollEatMenu(value) {
-    const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth; // 최대 이동 거리
-    const translateX = (value / parseFloat(slider.max)) * maxTranslate;  // 현재 슬라이더 비율만큼 이동
-    eatMenu.style.transform = `translateX(-${translateX}px)`; // 왼쪽으로 이동
-    slider.value = value; // 슬라이더 값 반영
-}
-
-// ✅ 마우스를 메뉴에 눌렀을 때: 드래그 시작
+// 드래그 시작
 eatMenu.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX1 = e.clientX; // 마우스 x좌표 기억
-    scrollStart = parseTransformX(eatMenu.style.transform); // 현재 위치 기억
-    eatMenu.style.cursor = 'grabbing'; // 커서 변경
+  isDragging = true;
+  startX1 = e.clientX;
+  scrollStart = getTranslateX();
+  eatMenu.style.cursor = 'grabbing';
 });
 
-// ✅ 마우스를 움직일 때: 드래그 진행
-document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return; // 드래그 상태 아니면 무시
-
-    const dx = e.clientX - startX1; // 움직인 거리
-    const speedFactor = 0.5; // 1.0 기본, >1 빠름, <1: 느림
-    const containerWidth = eatMenu.parentElement.offsetWidth;
-    const maxTranslate = eatMenu.scrollWidth - containerWidth;
-    let newTranslate = scrollStart - dx * speedFactor; // 새 위치 계산 (오른쪽 드래그 시 음수)
-
-    // 메뉴 이동 제한 (좌우 끝 벗어나지 않도록)
-    newTranslate = Math.max(0, Math.min(newTranslate, maxTranslate));
-
-    // 메뉴 위치 이동
-    eatMenu.style.transform = `translateX(-${newTranslate}px)`;
-
-    // 슬라이더 위치 동기화
-    currentValue = (newTranslate / maxTranslate) * parseFloat(slider.max);
-    slider.value = currentValue;
-});
-
-// ✅ 마우스 버튼을 뗐을 때: 드래그 종료
+// 드래그 종료
 document.addEventListener('mouseup', () => {
-    if (isDragging) {
-        isDragging = false;
-        eatMenu.style.cursor = 'grab'; // 커서 되돌리기
-    }
+  isDragging = false;
+  eatMenu.style.cursor = 'grab';
 });
 
-// ✅ 기본 커서 스타일 설정
+// 드래그 중
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+
+  // requestAnimationFrame으로 최적화
+  if (!animationFrame) {
+    animationFrame = requestAnimationFrame(() => {
+      const dx = e.clientX - startX1;
+      const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
+      let newTranslate = scrollStart - dx * 0.5;
+      newTranslate = Math.max(0, Math.min(newTranslate, maxTranslate));
+
+      eatMenu.style.transform = `translateX(-${newTranslate}px)`;
+
+      // 슬라이더 동기화
+      currentValue = (newTranslate / maxTranslate) * parseFloat(slider.max);
+      slider.value = currentValue;
+
+      animationFrame = null;
+    });
+  }
+});
+
+// 초기 커서
 eatMenu.style.cursor = 'grab';
 
-// ✅ 현재 transform 속성에서 translateX(px) 값만 숫자로 추출
-function parseTransformX(transform) {
-    const match = /translateX\(-?([\d.]+)px\)/.exec(transform);
-    return match ? parseFloat(match[1]) : 0;
+// 헬퍼 함수
+function updateTranslate(value) {
+  const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
+  const translateX = (value / parseFloat(slider.max)) * maxTranslate;
+  eatMenu.style.transform = `translateX(-${translateX}px)`;
+}
+
+function getTranslateX() {
+  const match = /translateX\(-?([\d.]+)px\)/.exec(eatMenu.style.transform);
+  return match ? parseFloat(match[1]) : 0;
 }
 
 
 
 // section4 Click 이벤트
+document.querySelectorAll('.food-btn') // => svg들만 선택됨
 
+document.addEventListener('DOMContentLoaded', () => {
+  const employeeImg = document.getElementById('employeeImage'); // 종업원 이미지
+  const speechText = document.querySelector('.speech-text'); // 말풍선 텍스트
+  const foodImgs = document.querySelectorAll('.foodList li img'); // 모든 음식 이미지
+  const buttons = document.querySelectorAll('.food-btn'); // 모든 SVG 버튼
+
+  let currentFood = null;
+
+  // 음식별 설정 데이터
+  const foodData = {
+    chiken: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/chiken.png',
+      text: '바르게 기른 동물복지 생닭고기를<br>사용하고 반려동물 첨가물 원칙을<br>지켜 올바른 식단을 만듭니다.'
+    },
+    egg: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/egg.png',
+      text: '동물복지 농장에서 바르게 자란<br>닭들이 낳은 달걀을 사용해<br>자연담은 식단을 만듭니다.'
+    },
+    frult: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/frult.png',
+      text: '내과 전문 수의사가 바르게<br>키운 채소들을 사용해 레시피를<br>설계하여 건강담은 식단을 만듭니다.'
+    },
+    salmon: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/salmon.png',
+      text: '자연담은 힘찬 연어 노르웨이산<br>연어로 싱싱함이 더해 올바른<br>식단을 만드는데 주된 재료입니다.'
+    },
+    sort: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/sort.png',
+      text: '수의사가 제안하는 기능별<br>건강케어에 들어가는 차전지피<br>반려동물들의 변비를 치료합니다.'
+    },
+    turkey: {
+      employee: 'section2Img/s2Main2.png',
+      marginTop: '73.5px',
+      food: 'section2Img/turkey.png',
+      text: '바르게 기른 칠면조 고기를<br>사용하고 반려동물 첨가물<br>원칙을 지켜 식단을 만듭니다.'
+    }
+  };
+
+  // 🍽 모든 음식 이미지 숨김
+  function hideAllFoods() {
+    foodImgs.forEach(img => {
+      img.classList.remove('active');
+    });
+  }
+
+  // 👉 SVG 버튼 클릭 이벤트
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const food = btn.dataset.food;
+
+      // 이미 선택한 음식이면 → 리셋
+      if (currentFood === food) {
+        employeeImg.src = 'section2Img/s2Main.png'; // 기본 종업원 이미지
+        employeeImg.style.marginTop = '100px';
+        speechText.innerHTML = '안녕하세요.<br>여기는 반려동물을 위한<br>건강음식재료를 소개합니다!';
+        hideAllFoods();
+        currentFood = null;
+        return;
+      }
+
+      // 새로 클릭된 음식일 경우
+      const selected = foodData[food];
+      if (!selected) return;
+
+      employeeImg.src = selected.employee;
+      employeeImg.style.marginTop = selected.marginTop;
+      speechText.innerHTML = selected.text;
+
+      hideAllFoods(); // 기존 음식 숨김
+
+      const targetImg = document.querySelector(`.foodList .${food}`);
+      if (targetImg) {
+        targetImg.classList.add('active');
+      }
+
+      currentFood = food;
+    });
+  });
+});
+function showFoodImage(foodClass) {
+  const allImages = document.querySelectorAll('.foodList img');
+
+  allImages.forEach(img => {
+    img.classList.remove('active');
+  });
+
+  const target = document.querySelector(`.foodList .${foodClass}`);
+  if (target) {
+    target.classList.add('active');
+  }
+}
 
 // section5 리뷰 드래그 이벤트
 
-
-// 새로고침시 최상단으로 이동
-window.addEventListener('load', function () {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'smooth'
-  });
-});
-
 // 메뉴 클릭시 section 이동
 function scrollTosection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        section.scrollIntoView({ behavior: 'smooth' });
-    }
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
 };
