@@ -1,163 +1,3 @@
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
-// ✅ 전역 상태 관리 변수들
-let currentSectionIndex = 0;
-let profileStage = 0; // 0: 아무것도 없음, 1: dogProfile, 2: catProfile
-
-// ✅ 요소들 참조
-const dogThumbnail = document.getElementById("dogThumbnail");
-const catThumbnail = document.getElementById("catThumbnail");
-const dogProfile = document.getElementById("dogProfile");
-const catProfile = document.getElementById("catProfile");
-const dogFinal = document.getElementById("dogFinalPosition");
-const catFinal = document.getElementById("catFinalPosition");
-
-// ✅ 복제된 이미지 참조용
-let dogClone = null;
-let catClone = null;
-
-// ✅ 새로고침 시 section1로 강제 이동
-window.addEventListener("load", () => {
-  document.getElementById("section1").scrollIntoView({ behavior: "auto" });
-});
-
-// ✅ 프로필 등장 애니메이션
-function animateToProfile(img, targetEl, profile, isDog) {
-  if (!img || !targetEl || !profile) return;
-
-  profile.style.opacity = "1";
-  profile.style.visibility = "visible";
-  profile.style.zIndex = "20";
-  document.body.classList.add("profile-active");
-
-  const clone = img.cloneNode(true);
-  const start = img.getBoundingClientRect();
-  const end = targetEl.getBoundingClientRect();
-
-  Object.assign(clone.style, {
-    position: "fixed",
-    left: `${start.left}px`,
-    top: `${start.top}px`,
-    width: `${start.width}px`,
-    height: `${start.height}px`,
-    transition: "all 0.8s ease",
-    zIndex: 9999,
-    pointerEvents: "none"
-  });
-
-  document.body.appendChild(clone);
-  img.style.opacity = "0";
-  img.style.pointerEvents = "auto";
-
-  requestAnimationFrame(() => {
-    clone.style.left = `${end.left}px`;
-    clone.style.top = `${end.top}px`;
-    clone.style.width = `${end.width}px`;
-    clone.style.height = `${end.height}px`;
-  });
-
-  if (isDog) dogClone = clone;
-  else catClone = clone;
-}
-
-// ✅ 프로필 복귀 애니메이션
-function restoreProfile(img, profile, clone, isDog) {
-  if (!img || !profile || !clone) return;
-
-  const start = img.getBoundingClientRect();
-  Object.assign(clone.style, {
-    left: `${start.left}px`,
-    top: `${start.top}px`,
-    width: `${start.width}px`,
-    height: `${start.height}px`
-  });
-
-  profile.style.opacity = "0";
-  profile.style.visibility = "hidden";
-  profile.style.zIndex = "-1";
-  document.body.classList.remove("profile-active");
-
-  setTimeout(() => {
-    clone.remove();
-    img.style.opacity = "1";
-    img.style.pointerEvents = "auto";
-    if (isDog) dogClone = null;
-    else catClone = null;
-  }, 800);
-}
-
-// ✅ 섹션 리스트
-const sectionList = [
-  "section1",
-  "section2",
-  "section3",
-  "section4",
-  "section5",
-  "section6",
-  "footer"
-];
-
-let isScrolling = false;
-
-// ✅ 휠 이벤트 처리
-window.addEventListener("wheel", (e) => {
-  const currentSection = sectionList[currentSectionIndex];
-  const visibleSection = document.getElementById(currentSection);
-  if (currentSection !== 'footer' && (!visibleSection || !visibleSection.contains(document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)))) return;
-
-  e.preventDefault();
-  if (isScrolling) return;
-  isScrolling = true;
-
-  const isDown = e.deltaY > 0;
-
-  if (isDown) {
-    if (currentSectionIndex === 0 && profileStage === 0) {
-      animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
-      profileStage = 1;
-      isScrolling = false;
-    } else if (currentSectionIndex === 0 && profileStage === 1) {
-      restoreProfile(dogThumbnail, dogProfile, dogClone, true);
-      setTimeout(() => {
-        animateToProfile(catThumbnail, catFinal, catProfile, false);
-        profileStage = 2;
-        isScrolling = false;
-      }, 850);
-    } else if (currentSectionIndex === 0 && profileStage === 2) {
-      restoreProfile(catThumbnail, catProfile, catClone, false);
-      profileStage = 0;
-      setTimeout(() => {
-        currentSectionIndex++;
-        document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
-        isScrolling = false;
-      }, 850);
-    } else if (currentSectionIndex < sectionList.length - 1) {
-      currentSectionIndex++;
-      document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => { isScrolling = false; }, 1000);
-    } else {
-      isScrolling = false;
-    }
-  } else {
-    if (currentSectionIndex === 0 && profileStage === 2) {
-      restoreProfile(catThumbnail, catProfile, catClone, false);
-      profileStage = 1;
-      isScrolling = false;
-    } else if (currentSectionIndex === 0 && profileStage === 1) {
-      restoreProfile(dogThumbnail, dogProfile, dogClone, true);
-      profileStage = 0;
-      isScrolling = false;
-    } else if (currentSectionIndex > 0) {
-      currentSectionIndex--;
-      document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
-      setTimeout(() => { isScrolling = false; }, 1000);
-    } else {
-      isScrolling = false;
-    }
-  }
-}, { passive: false });
-
 // ✅ 썸네일 클릭 이벤트
 
 dogThumbnail.addEventListener("click", () => {
@@ -193,6 +33,23 @@ catThumbnail.addEventListener("click", () => {
     profileStage = 2;
   }
 });
+
+// ✅ 큰 강아지 이미지 클릭 시 제자리 복귀
+dogFinal.addEventListener("click", () => {
+  if (profileStage === 1) {
+    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
+    profileStage = 0;
+  }
+});
+
+// ✅ 큰 고양이 이미지 클릭 시 제자리 복귀
+catFinal.addEventListener("click", () => {
+  if (profileStage === 2) {
+    restoreProfile(catThumbnail, catProfile, catClone, false);
+    profileStage = 0;
+  }
+});
+
 // section2 DogEat 드래그 슬라이더
 const sliderWrapper = document.querySelector('.slider-wrapper');
 
@@ -323,37 +180,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const foodData = {
     chiken: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/chiken.png',
       text: '바르게 기른 동물복지 생닭고기를<br>사용하고 반려동물 첨가물 원칙을<br>지켜 올바른 식단을 만듭니다.'
     },
     egg: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/egg.png',
       text: '동물복지 농장에서 바르게 자란<br>닭들이 낳은 달걀을 사용해<br>자연담은 식단을 만듭니다.'
     },
     frult: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/frult.png',
       text: '내과 전문 수의사가 바르게<br>키운 채소들을 사용해 레시피를<br>설계하여 건강담은 식단을 만듭니다.'
     },
     salmon: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/salmon.png',
       text: '자연담은 힘찬 연어 노르웨이산<br>연어로 싱싱함이 더해 올바른<br>식단을 만드는데 주된 재료입니다.'
     },
     sort: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/sort.png',
       text: '수의사가 제안하는 기능별<br>건강케어에 들어가는 차전지피<br>반려동물들의 변비를 치료합니다.'
     },
     turkey: {
       employee: 'section2Img/s2Main2.png',
-      marginTop: '73.5px',
+      marginTop: '-26px',
       food: 'section2Img/turkey.png',
       text: '바르게 기른 칠면조 고기를<br>사용하고 반려동물 첨가물<br>원칙을 지켜 식단을 만듭니다.'
     }
@@ -374,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // 이미 선택한 음식이면 → 리셋
       if (currentFood === food) {
         employeeImg.src = 'section2Img/s2Main.png'; // 기본 종업원 이미지
-        employeeImg.style.marginTop = '100px';
+        employeeImg.style.marginTop = '0px';
         speechText.innerHTML = '안녕하세요.<br>여기는 반려동물을 위한<br>건강음식재료를 소개합니다!';
         hideAllFoods();
         currentFood = null;
@@ -414,6 +271,64 @@ function showFoodImage(foodClass) {
 }
 
 // section5 리뷰 드래그 이벤트
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.getElementById('slider');
+  const cards = Array.from(slider.querySelectorAll('li'));
+  const visibleCount = 5;
+
+  let currentStartIndex = 0;
+
+  // 초기 렌더링
+  updateVisibleCards();
+
+  let isDragging = false;
+  let startX = 0;
+
+  slider.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX;
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (!isDragging) return;
+    const deltaX = e.pageX - startX;
+
+    if (deltaX < -50) {
+      // 👉 오른쪽으로 이동
+      if (currentStartIndex + visibleCount < cards.length) {
+        currentStartIndex++;
+        updateVisibleCards();
+      }
+    } else if (deltaX > 50) {
+      // 👈 왼쪽으로 이동
+      if (currentStartIndex > 0) {
+        currentStartIndex--;
+        updateVisibleCards();
+      }
+    }
+
+    isDragging = false;
+  });
+
+  function updateVisibleCards() {
+    cards.forEach((card, idx) => {
+      // 모든 클래스 제거
+      card.className = '';
+      card.style.display = 'none';
+    });
+
+    for (let i = 0; i < visibleCount; i++) {
+      const cardIndex = currentStartIndex + i;
+      if (cardIndex >= cards.length) break;
+
+      const card = cards[cardIndex];
+
+      card.className = ''; // 잔여 클래스 초기화
+      card.classList.add(`animalReview${i + 1}`);
+      card.style.display = 'block';
+    }
+  }
+});
 
 // 메뉴 클릭시 section 이동
 function scrollTosection(sectionId) {
