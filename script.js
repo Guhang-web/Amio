@@ -96,6 +96,7 @@ sliderWrapper.addEventListener('scroll', () => {
 
 
 // section3 CatEat 슬라이더 (드래그)
+// CatEat 슬라이더 (드래그 + 슬라이더 동기화)
 const slider = document.getElementById('rationgSlider2');
 const eatMenu = document.querySelector('.eatMenu1');
 
@@ -104,6 +105,17 @@ let startX1 = 0;
 let scrollStart = 0;
 let currentValue = parseFloat(slider.value);
 let animationFrame = null;
+let latestX = 0;
+let maxTranslate = 0;
+
+// 초기 커서
+eatMenu.style.cursor = 'grab';
+
+// 이미지 로딩 후 maxTranslate 계산
+window.addEventListener('load', () => {
+  maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
+  updateTranslate(currentValue);
+});
 
 // 슬라이더 변경 시
 slider.addEventListener('input', () => {
@@ -115,49 +127,52 @@ slider.addEventListener('input', () => {
 eatMenu.addEventListener('mousedown', (e) => {
   isDragging = true;
   startX1 = e.clientX;
+  latestX = e.clientX;
   scrollStart = getTranslateX();
   eatMenu.style.cursor = 'grabbing';
-});
 
-// 드래그 종료
-document.addEventListener('mouseup', () => {
-  isDragging = false;
-  eatMenu.style.cursor = 'grab';
+  // 이미지 로딩 이후 다시 계산 (혹시나 DOM 변경된 경우 대비)
+  maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
+  document.body.style.userSelect = 'none';
 });
 
 // 드래그 중
 document.addEventListener('mousemove', (e) => {
   if (!isDragging) return;
+  latestX = e.clientX;
 
-  // requestAnimationFrame으로 최적화
   if (!animationFrame) {
     animationFrame = requestAnimationFrame(() => {
-      const dx = e.clientX - startX1;
-      const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
-      let newTranslate = scrollStart - dx * 0.5;
+      const dx = latestX - startX1;
+      let newTranslate = scrollStart - dx * 0.3; // 속도 완화
       newTranslate = Math.max(0, Math.min(newTranslate, maxTranslate));
 
       eatMenu.style.transform = `translateX(-${newTranslate}px)`;
 
       // 슬라이더 동기화
       currentValue = (newTranslate / maxTranslate) * parseFloat(slider.max);
-      slider.value = currentValue;
+      slider.value = currentValue.toFixed(2);
 
       animationFrame = null;
     });
   }
 });
 
-// 초기 커서
-eatMenu.style.cursor = 'grab';
+// 드래그 종료
+document.addEventListener('mouseup', () => {
+  if (!isDragging) return;
+  isDragging = false;
+  eatMenu.style.cursor = 'grab';
+  document.body.style.userSelect = '';
+});
 
-// 헬퍼 함수
+// 헬퍼 함수: 슬라이더 값으로 위치 갱신
 function updateTranslate(value) {
-  const maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
   const translateX = (value / parseFloat(slider.max)) * maxTranslate;
   eatMenu.style.transform = `translateX(-${translateX}px)`;
 }
 
+// 헬퍼 함수: 현재 transform 값 추출
 function getTranslateX() {
   const match = /translateX\(-?([\d.]+)px\)/.exec(eatMenu.style.transform);
   return match ? parseFloat(match[1]) : 0;

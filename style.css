@@ -679,7 +679,11 @@ body.profile-active .mainTable {
 }
 
 #main #section2 #patEatMenu ul li:nth-child(6) {
-    margin-top: -40px;
+    margin-top: 40px;
+}
+#main #section2 #patEatMenu ul li:nth-child(6) img {
+    width: 250px;
+    height: 436px;
 }
 
 #main #section2 #patEatMenu ul li div {
@@ -795,7 +799,8 @@ body.profile-active .mainTable {
     top: 25px;
     z-index: 11;
     will-change: transform;
-    transition: transform 0.3s ease;
+    transition: none !important;
+    cursor: grab;
 }
 
 #main #section3 #patEatMenu1 ul li {
@@ -832,7 +837,7 @@ body.profile-active .mainTable {
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(6) {
-    margin-top: -40px;
+    margin-top: 80px;
 }
 
 #main #section3 #patEatMenu1 ul li div {
