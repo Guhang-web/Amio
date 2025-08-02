@@ -27,6 +27,8 @@ const catProfile = document.getElementById("catProfile");
 const dogFinal = document.getElementById("dogFinalPosition");
 const catFinal = document.getElementById("catFinalPosition");
 
+
+
 // ✅ 새로고침 시 section1로 강제 이동
 window.addEventListener("load", () => {
   document.getElementById("section1").scrollIntoView({ behavior: "smooth" });
@@ -102,20 +104,58 @@ function restoreProfile(img, profile, clone, isDog) {
   }, 800);
 }
 
-// ✅ 휠 이벤트 처리 - 조건 만족할 때만 실행
-if (document.getElementById("section1")) {
-  window.addEventListener("load", () => {
-    document.getElementById("section1").scrollIntoView({ behavior: "auto" });
-  });
+// ✅ 부드럽게 이동하는 함수
+function scrollToSection(index) {
+  const target = document.getElementById(sectionList[index]);
+  if (!target) return;
+  const targetY = target.offsetTop;
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const duration = 800; // 0.8초
+  let startTime = null;
 
+  function animateScroll(timestamp) {
+    if (!startTime) startTime = timestamp;
+    const timeElapsed = timestamp - startTime;
+    const progress = Math.min(timeElapsed / duration, 1);
+    const ease = easeInOutCubic(progress);
+    window.scrollTo(0, startY + distance * ease);
+
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  }
+
+  requestAnimationFrame(animateScroll);
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+
+
+// ✅ load 시 강제 이동 → scrollIntoView → scrollToSection으로 변경
+window.addEventListener("load", () => {
+  scrollToSection(0); // section1으로 부드럽게 이동
+  updateCurrentSectionIndex();
+});
+
+
+
+// ✅ 휠 이벤트 내 scroll 이동 로직도 scrollToSection 사용
+if (document.getElementById("section1")) {
   window.addEventListener("wheel", (e) => {
-     updateCurrentSectionIndex();
+    updateCurrentSectionIndex();
     const currentSection = sectionList[currentSectionIndex];
     const visibleSection = document.getElementById(currentSection);
-    if (currentSection !== 'footer' &&
-        (!visibleSection || !visibleSection.contains(document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)))) {
-      return;
-    }
+
+    if (
+      currentSection !== 'footer' &&
+      (!visibleSection || !visibleSection.contains(document.elementFromPoint(window.innerWidth / 2, window.innerHeight / 2)))
+    ) return;
 
     e.preventDefault();
     if (isScrolling) return;
@@ -140,13 +180,13 @@ if (document.getElementById("section1")) {
         profileStage = 0;
         setTimeout(() => {
           currentSectionIndex++;
-          document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
-          isScrolling = false;
+          scrollToSection(currentSectionIndex);
+          setTimeout(() => { isScrolling = false; }, 1200);
         }, 850);
       } else if (currentSectionIndex < sectionList.length - 1) {
         currentSectionIndex++;
-        document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
-        setTimeout(() => { isScrolling = false; }, 1000);
+        scrollToSection(currentSectionIndex);
+        setTimeout(() => { isScrolling = false; }, 1200);
       } else {
         isScrolling = false;
       }
@@ -161,7 +201,7 @@ if (document.getElementById("section1")) {
         isScrolling = false;
       } else if (currentSectionIndex > 0) {
         currentSectionIndex--;
-        document.getElementById(sectionList[currentSectionIndex]).scrollIntoView({ behavior: "smooth" });
+        scrollToSection(currentSectionIndex);
         setTimeout(() => { isScrolling = false; }, 1000);
       } else {
         isScrolling = false;
@@ -169,6 +209,7 @@ if (document.getElementById("section1")) {
     }
   }, { passive: false });
 }
+
 // 휠 이벤트가 항상 정확히 그 지점부터 작동하게 해주는 보정 로직
 function updateCurrentSectionIndex() {
   const centerX = window.innerWidth / 2;
