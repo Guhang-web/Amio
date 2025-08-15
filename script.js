@@ -45,88 +45,49 @@ sliderWrapper.addEventListener('scroll', () => {
 
 
 // section3 CatEat 슬라이더 (드래그)
-// CatEat 슬라이더 (드래그 + 슬라이더 동기화)
-const slider = document.getElementById('rationgSlider2');
-const eatMenu = document.querySelector('.eatMenu1');
+const sliderWrapper1 = document.querySelector('.slider-wrapper1');
 
-let isDragging = false;
-let startX1 = 0;
-let scrollStart = 0;
-let currentValue = parseFloat(slider.value);
-let animationFrame = null;
-let latestX = 0;
-let maxTranslate = 0;
+let isDown1 = false;
+let startX1;
+let scrollLeft1;
 
-// 초기 커서
-eatMenu.style.cursor = 'grab';
-
-// 이미지 로딩 후 maxTranslate 계산
-window.addEventListener('load', () => {
-  maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
-  updateTranslate(currentValue);
+sliderWrapper1.addEventListener('mousedown', (e1) => {
+  isDown1 = true;
+  sliderWrapper1.classList.add('active');
+  startX1 = e1.pageX - sliderWrapper1.offsetLeft;
+  scrollLeft1 = sliderWrapper1.scrollLeft;
 });
 
-// 슬라이더 변경 시
-slider.addEventListener('input', () => {
-  currentValue = parseFloat(slider.value);
-  updateTranslate(currentValue);
+sliderWrapper1.addEventListener('mouseleave', () => {
+  isDown1 = false;
+  sliderWrapper1.classList.remove('active');
 });
 
-// 드래그 시작
-eatMenu.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startX1 = e.clientX;
-  latestX = e.clientX;
-  scrollStart = getTranslateX();
-  eatMenu.style.cursor = 'grabbing';
-
-  // 이미지 로딩 이후 다시 계산 (혹시나 DOM 변경된 경우 대비)
-  maxTranslate = eatMenu.scrollWidth - eatMenu.parentElement.offsetWidth;
-  document.body.style.userSelect = 'none';
+sliderWrapper1.addEventListener('mouseup', () => {
+  isDown1 = false;
+  sliderWrapper1.classList.remove('active');
 });
 
-// 드래그 중
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-  latestX = e.clientX;
-
-  if (!animationFrame) {
-    animationFrame = requestAnimationFrame(() => {
-      const dx = latestX - startX1;
-      let newTranslate = scrollStart - dx * 0.3; // 속도 완화
-      newTranslate = Math.max(0, Math.min(newTranslate, maxTranslate));
-
-      eatMenu.style.transform = `translateX(-${newTranslate}px)`;
-
-      // 슬라이더 동기화
-      currentValue = (newTranslate / maxTranslate) * parseFloat(slider.max);
-      slider.value = currentValue.toFixed(2);
-
-      animationFrame = null;
-    });
-  }
+sliderWrapper1.addEventListener('mousemove', (e1) => {
+  if (!isDown1) return;
+  e1.preventDefault();
+  const x1 = e1.pageX - sliderWrapper1.offsetLeft;
+  const walk1 = (x1 - startX1) * 0.5; // 스크롤 속도 조절
+  sliderWrapper1.scrollLeft = scrollLeft1 - walk1;
 });
 
-// 드래그 종료
-document.addEventListener('mouseup', () => {
-  if (!isDragging) return;
-  isDragging = false;
-  eatMenu.style.cursor = 'grab';
-  document.body.style.userSelect = '';
+// section2 DogEat 슬라이더 (input)
+const rangeSlider1 = document.getElementById('rationgSlider2');
+
+rangeSlider1.addEventListener('input', () => {
+  const maxScroll1 = sliderWrapper1.scrollWidth - sliderWrapper1.clientWidth;
+  sliderWrapper1.scrollLeft = (rangeSlider1.value / 5) * maxScroll1;
 });
 
-// 헬퍼 함수: 슬라이더 값으로 위치 갱신
-function updateTranslate(value) {
-  const translateX = (value / parseFloat(slider.max)) * maxTranslate;
-  eatMenu.style.transform = `translateX(-${translateX}px)`;
-}
-
-// 헬퍼 함수: 현재 transform 값 추출
-function getTranslateX() {
-  const match = /translateX\(-?([\d.]+)px\)/.exec(eatMenu.style.transform);
-  return match ? parseFloat(match[1]) : 0;
-}
-
+sliderWrapper1.addEventListener('scroll', () => {
+  const maxScroll1 = sliderWrapper1.scrollWidth - sliderWrapper1.clientWidth;
+  rangeSlider1.value = (sliderWrapper1.scrollLeft / maxScroll1) * 5;
+});
 
 
 // section4 Click 이벤트
@@ -144,37 +105,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const foodData = {
     chiken: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/chiken.png',
       text: '바르게 기른 동물복지 생닭고기를<br>사용하고 반려동물 첨가물 원칙을<br>지켜 올바른 식단을 만듭니다.'
     },
     egg: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/egg.png',
       text: '동물복지 농장에서 바르게 자란<br>닭들이 낳은 달걀을 사용해<br>자연담은 식단을 만듭니다.'
     },
     frult: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/frult.png',
       text: '내과 전문 수의사가 바르게<br>키운 채소들을 사용해 레시피를<br>설계하여 건강담은 식단을 만듭니다.'
     },
     salmon: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/salmon.png',
       text: '자연담은 힘찬 연어 노르웨이산<br>연어로 싱싱함이 더해 올바른<br>식단을 만드는데 주된 재료입니다.'
     },
     sort: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/sort.png',
       text: '수의사가 제안하는 기능별<br>건강케어에 들어가는 차전지피<br>반려동물들의 변비를 치료합니다.'
     },
     turkey: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-12px',
+      marginTop: '1.5px',
       food: 'section2Img/turkey.png',
       text: '바르게 기른 칠면조 고기를<br>사용하고 반려동물 첨가물<br>원칙을 지켜 식단을 만듭니다.'
     }
@@ -194,9 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 이미 선택한 음식이면 → 리셋
       if (currentFood === food) {
-        employeeImg.src = 'section2Img/s2Main.png'; // 기본 종업원 이미지
+        employeeImg.src = 'section2Img/s2Main1.png'; // 기본 종업원 이미지
         employeeImg.style.marginTop = '0px';
-        speechText.innerHTML = '좌측에 식재료들을 눌러<br>식재료들의 정보를 확인해보세요!';
+        speechText.innerHTML = '좌측에 식재료들을 눌러<br><br>식재료들의 정보를 확인해보세요!';
         hideAllFoods();
         currentFood = null;
         return;
