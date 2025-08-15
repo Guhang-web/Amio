@@ -1,54 +1,3 @@
-// ✅ 썸네일 클릭 이벤트
-
-dogThumbnail.addEventListener("click", () => {
-  if (profileStage === 2) {
-    restoreProfile(catThumbnail, catProfile, catClone, false);
-    profileStage = 0;
-    setTimeout(() => {
-      animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
-      profileStage = 1;
-    }, 850);
-  } else if (profileStage === 1) {
-    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
-    profileStage = 0;
-  } else if (profileStage === 0) {
-    animateToProfile(dogThumbnail, dogFinal, dogProfile, true);
-    profileStage = 1;
-  }
-});
-
-catThumbnail.addEventListener("click", () => {
-  if (profileStage === 1) {
-    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
-    profileStage = 0;
-    setTimeout(() => {
-      animateToProfile(catThumbnail, catFinal, catProfile, false);
-      profileStage = 2;
-    }, 850);
-  } else if (profileStage === 2) {
-    restoreProfile(catThumbnail, catProfile, catClone, false);
-    profileStage = 0;
-  } else if (profileStage === 0) {
-    animateToProfile(catThumbnail, catFinal, catProfile, false);
-    profileStage = 2;
-  }
-});
-
-// ✅ 큰 강아지 이미지 클릭 시 제자리 복귀
-dogFinal.addEventListener("click", () => {
-  if (profileStage === 1) {
-    restoreProfile(dogThumbnail, dogProfile, dogClone, true);
-    profileStage = 0;
-  }
-});
-
-// ✅ 큰 고양이 이미지 클릭 시 제자리 복귀
-catFinal.addEventListener("click", () => {
-  if (profileStage === 2) {
-    restoreProfile(catThumbnail, catProfile, catClone, false);
-    profileStage = 0;
-  }
-});
 
 // section2 DogEat 드래그 슬라이더
 const sliderWrapper = document.querySelector('.slider-wrapper');
@@ -195,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const foodData = {
     chiken: {
       employee: 'section2Img/s2Main3.png',
-      marginTop: '-13px',
+      marginTop: '-12px',
       food: 'section2Img/chiken.png',
       text: '바르게 기른 동물복지 생닭고기를<br>사용하고 반려동물 첨가물 원칙을<br>지켜 올바른 식단을 만듭니다.'
     },

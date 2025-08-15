@@ -82,7 +82,7 @@
                 const redTranslateY = redProgress * -30;        
                 const redOpacity = 1 - redProgress;    
                 
-                redBox.style.transform = `translateX(-50%) scale(${redScale}) translateX(${redTranslateX}%) translateY(${redTranslateY}%)`;
+                redBox.style.transform =`translateX(-50%) scale(${redScale}) translateX(${redTranslateX}%) translateY(${redTranslateY}%)`;
                 redBox.style.opacity = redOpacity;
                 redBox.style.zIndex = redProgress > 0.1 ? 200 : 100;
             }

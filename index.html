@@ -14,83 +14,84 @@
 <body>
     <main id="main">
         <section id="section1">
-            <div class="backBg">
-                <div class="sun"></div>
-            </div>
-            <header id="header">
-                <ul class="headerGnb">
-                    <li><a onclick="scrollTosection('section1')">메인</a></li>
-                    <li><a onclick="scrollTosection('section4')">캐릭터</a></li>
-                    <li><a onclick="scrollTosection('section2')">대표메뉴</a></li>
-                    <li><a onclick="scrollTosection('section5')">인스타소개</a></li>
-                    <li><a onclick="scrollTosection('section6')">고객후기</a></li>
+            <div class="stage" style="width: 100%; height: 100vh;">
+                <div class="backBg">
+                    <div class="sun"></div>
+                </div>
+                <header id="header">
+                    <ul class="headerGnb">
+                        <li><a onclick="scrollTosection('section1')">메인</a></li>
+                        <li><a onclick="scrollTosection('section4')">캐릭터</a></li>
+                        <li><a onclick="scrollTosection('section2')">대표메뉴</a></li>
+                        <li><a onclick="scrollTosection('section5')">인스타소개</a></li>
+                        <li><a onclick="scrollTosection('section6')">고객후기</a></li>
+                    </ul>
+                </header>
+                <ul class="lamp">
+                    <li><img src="mainImg/lampLeft.png" alt="왼쪽 전등"></li>
+                    <li><img src="mainImg/lampRight.png" alt="오른쪽 전등"></li>
                 </ul>
-            </header>
-            <div class="lamp">
-                <li><img src="mainImg/lampLeft.png" alt="왼쪽 전등"></li>
-                <li><img src="mainImg/lampRight.png" alt="오른쪽 전등"></li>
-            </div>
-            <div class="logoGnb">
-                <li><img src="mainImg/logo.png" alt="amio로고"></li>
-                <li><img src="mainImg/textCenter.png" alt="바른먹거리 풀무원 아미오"></li>
-            </div>
-            <div class="S1Wrapper">
-                <ul class="S1WrapperUp">
-                    <li class="catsTower"><img id="catThumbnail" src="mainImg/catsTower.png" alt="고양이"></li>
-                    <li class="girl"><img src="mainImg/person.png" alt=""></li>
-                    <li class="tolk"><img src="mainImg/tolkBox.png" alt="">
-                        <p>풀무원이기에 까다롭지만,<br />반려동물의 건강과 행복을 위해<br />
-                            풀무원 아미오에서는 반려동물<br />첨가물 원칙을 지킵니다.</p>
-                    </li>
-                    <li class="dogFruit">
-                        <img src="mainImg/dog.png" class="dog" id="dogThumbnail" alt="강아지">
-                        <img src="mainImg/fruit.png" alt="과일">
-                    </li>
-                    <li class="tableSub"></li>
-                    <li class="rightSetting"><img src="mainImg/rightSetting.png" alt="setting"></li>
-                    <li class="mainTable"></li>
+                <ul class="logoGnb">
+                    <li><img src="mainImg/logo.png" alt="amio로고"></li>
+                    <li><img src="mainImg/textCenter.png" alt="바른먹거리 풀무원 아미오"></li>
                 </ul>
-                <ul class="S1WrapperMiddle">
-                    <li class="plantLeft1"><img src="mainImg/plantLeft.png" alt=""></li>
-                    <li class="plantRight1"><img src="mainImg/plantRight.png" alt=""></li>
-                </ul>
-                <ul class="S1WrapperDown">
-                    <li class="plantLeft2"><img src="mainImg/plantBottom.png" alt=""></li>
-                    <li class="plantRight2"><img src="mainImg/plantRight1.png" alt=""></li>
-                </ul>
-            </div>
-            <!-- section1 Profile -->
-            <div id="dogProfile">
-                <ul>
-                    <img class="IdCard" src="mainImg/IdCard.png" alt="IdCard">
-                    <li class="dogIdCard"><img src="mainImg/dogIdCard.png" alt="dogIdCard"></li>
-                    <li class="Profile">
-                        <p>Name<br /><span style="color: #000; font-size: 18px;">아미(Ami)</span></p>
-                        <p>MEMBER SINCE<br /><span style="color: #000; font-size: 18px;">2020.08</span></p>
-                        <p>BREED<br /><span style="color: #000; font-size: 18px;">푸들</span></p>
-                    </li>
-                    <h3 class="dogFooter">"원재료 본연의 풍미를 즐기는 감성 먹방러"</h3>
-                    <li class="dog" id="dogFinalPosition"></li>
-                </ul>
-            </div>
-            <!-- section1 catProfile -->
-            <div id="catProfile">
-                <ul>
-                    <img class="IdCard" src="mainImg/IdCard.png" alt="IdCard">
-                    <li class="catIdCard"><img src="mainImg/cat.png" alt="catIdCard"></li>
-                    <li class="Profile">
-                        <p>Name<br /><span style="color: #000; font-size: 18px;">미오(Mio)</span></p>
-                        <p>MEMBER SINCE<br /><span style="color: #000; font-size: 18px;">2023.03</span></p>
-                        <p>BREED<br /><span style="color: #000; font-size: 18px;">코리안숏헤어</span></p>
-                    </li>
-                    <h3 class="catFooter">"입맛에 안맞으면 바로 OUT,깐깐한 먹방러"</h3>
-                    <li class="cat" id="catFinalPosition">
-                        <img class="invisible" src="mainImg/catsTower.png" alt="catsTower"/>
-                    </li>
-                </ul>
+                <div class="S1Wrapper">
+                    <ul class="S1WrapperUp">
+                        <li class="catsTower"><img id="catThumbnail" src="mainImg/catsTower.png" alt="고양이"></li>
+                        <li class="girl red-box"><img src="mainImg/person.png" alt=""></li>
+                        <li class="tolk"><img src="mainImg/tolkBox.png" alt="">
+                            <p>풀무원이기에 까다롭지만,<br />반려동물의 건강과 행복을 위해<br />
+                                풀무원 아미오에서는 반려동물<br />첨가물 원칙을 지킵니다.</p>
+                        </li>
+                        <li class="dogFruit">
+                            <img src="mainImg/dog.png" class="dog" id="dogThumbnail" alt="강아지">
+                            <img src="mainImg/fruit.png" alt="과일">
+                        </li>
+                        <li class="tableSub"></li>
+                        <li class="rightSetting"><img src="mainImg/rightSetting.png" alt="setting"></li>
+                        <li class="mainTable"></li>
+                    </ul>
+                    <ul class="S1WrapperMiddle">
+                        <li class="plantLeft1"><img src="mainImg/plantLeft.png" alt=""></li>
+                        <li class="plantRight1"><img src="mainImg/plantRight.png" alt=""></li>
+                    </ul>
+                    <ul class="S1WrapperDown">
+                        <li class="plantLeft2"><img src="mainImg/plantBottom.png" alt=""></li>
+                        <li class="plantRight2"><img src="mainImg/plantRight1.png" alt=""></li>
+                    </ul>
+                </div>
+                <!-- section1 Profile -->
+                <div id="dogProfile">
+                    <ul class="blue-box">
+                        <img class="IdCard" src="mainImg/IdCard.png" alt="IdCard"/>
+                        <li class="dogIdCard"><img src="mainImg/dogIdCard.png" alt="dogIdCard"></li>
+                        <li class="Profile">
+                            <p>Name<br /><span style="color: #000; font-size: 18px;">아미(Ami)</span></p>
+                            <p>MEMBER SINCE<br /><span style="color: #000; font-size: 18px;">2020.08</span></p>
+                            <p>BREED<br /><span style="color: #000; font-size: 18px;">푸들</span></p>
+                        </li>
+                        <h3 class="dogFooter">"원재료 본연의 풍미를 즐기는 감성 먹방러"</h3>
+                        <li class="dog" id="dogFinalPosition"><img src="mainImg/dog.png"/></li>
+                    </ul>
+                </div>
+                <!-- section1 catProfile -->
+                <div id="catProfile">
+                    <ul class="green-box">
+                        <img class="IdCard" src="mainImg/IdCard.png" alt="IdCard">
+                        <li class="catIdCard"><img src="mainImg/cat.png" alt="catIdCard"></li>
+                        <li class="Profile">
+                            <p>Name<br /><span style="color: #000; font-size: 18px;">미오(Mio)</span></p>
+                            <p>MEMBER SINCE<br /><span style="color: #000; font-size: 18px;">2023.03</span></p>
+                            <p>BREED<br /><span style="color: #000; font-size: 18px;">코리안숏헤어</span></p>
+                        </li>
+                        <h3 class="catFooter">"입맛에 안맞으면 바로 OUT,깐깐한 먹방러"</h3>
+                        <li class="cat" id="catFinalPosition">
+                            <img class="invisible" src="mainImg/catsTower.png" alt="catsTower" />
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
-        <!-- section2 -->
         <section id="section2">
             <div id="patEatMenu">
                 <div id="dogEatMenu">
@@ -242,7 +243,7 @@
         <section id="section3">
             <div id="patEatMenu1">
                 <div id="catEatMenu">
-                    <input type="range" id="rationgSlider2" min="0" max="50" value="0" class="custom-slider"/>
+                    <input type="range" id="rationgSlider2" min="0" max="50" value="0" class="custom-slider" />
                     <h2>
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="70" fill="orange"
                             class="bi bi-bookmark-fill" viewBox="0 0 15 12 ">
@@ -574,17 +575,17 @@
                             <p>아미오에서 구매한 츄르를<br />슈가 흠뻑 빠졌어요!</p>
                         </li>
                         <li class="animalReview7">
-                        <img src="section4Img/potoCard7.png" alt="포토카드">
-                        <h6>Ami</h6>
-                        <p>우리 깐깐한 동동이는 <br />아미오 맛있게 먹어요!</p>
-                    </li>
-                    <li class="animalReview8">
-                        <img src="section4Img/potoCard8.png" alt="포토카드">
-                        <h6>Mio</h6>
-                        <p>건강담은식단을 먹고<br />캣치가 건강해졌어요!</p>
-                    </li>
-                </ul>
-            </div>
+                            <img src="section4Img/potoCard7.png" alt="포토카드">
+                            <h6>Ami</h6>
+                            <p>우리 깐깐한 동동이는 <br />아미오 맛있게 먹어요!</p>
+                        </li>
+                        <li class="animalReview8">
+                            <img src="section4Img/potoCard8.png" alt="포토카드">
+                            <h6>Mio</h6>
+                            <p>건강담은식단을 먹고<br />캣치가 건강해졌어요!</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
         <footer id="footer">

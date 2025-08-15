@@ -4,7 +4,6 @@ html {
 
 body {
     overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 #main {
@@ -22,8 +21,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: 104vh;
+    height: 260vh;
     position: relative;
+    top: 0;
     min-width: 1680px;
 }
 
@@ -318,14 +318,9 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(250, 250, 250, 0.7);
     width: 100%;
     height: 100vh;
-    z-index: 1000;
-    opacity: 0;
     /* 왼쪽에서 이동해오는 느낌 */
-    transition: opacity 0.5s ease, transform 0.8s ease;
-    visibility: hidden;
 }
 
 #main #section1 #dogProfile ul {
@@ -333,9 +328,9 @@ body {
     height: 670px;
     display: flex;
     position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 65%;
+    left: 65%;
+    transition: opacity 0.5s ease, transform 0.8s ease;
 }
 
 #main #section1 #dogProfile ul .IdCard {
@@ -406,14 +401,9 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(250, 250, 250, 0.7);
     width: 100%;
     height: 100vh;
-    z-index: 1000;
-    opacity: 0;
     /* 왼쪽에서 이동해오는 느낌 */
-    transition: opacity 0.5s ease, transform 0.8s ease;
-    visibility: hidden;
 }
 
 #main #section1 #catProfile ul {
@@ -421,9 +411,9 @@ body {
     height: 670px;
     display: flex;
     position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 65%;
+    left: 65%;
+    transition: opacity 0.5s ease, transform 0.8s ease;
 
 }
 
@@ -488,21 +478,6 @@ body {
 #main #section1 #catProfile ul .cat img {
     width: 100%;
     height: 100%;
-}
-
-#main #section1 #catProfile .invisible {
-    opacity: 0;
-    pointer-events: none;
-}
-
-#main #section1 #dogProfile.show {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-#main #section1 #catProfile.show {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 #dogThumbnail,
