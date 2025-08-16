@@ -189,64 +189,130 @@ function showFoodImage(foodClass) {
 }
 
 // section5 리뷰 드래그 이벤트
-document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.getElementById('slider');
-  const cards = Array.from(slider.querySelectorAll('li'));
-  const visibleCount = 5;
+(() => {
+  const slider = document.querySelector('#slider');
+  if (!slider) return;
 
-  let currentStartIndex = 0;
+  // DOM 고정 순서 (1~8)
+  const list = Array.from(slider.querySelectorAll('li'));
+  const N = list.length;          // 8
+  const VISIBLE = 5;              // 항상 5장만 보임
+  const STEP_PX = 140, SNAP = 0.35;
 
-  // 초기 렌더링
-  updateVisibleCards();
+  // 곡선 슬롯 클래스 (1~5만 사용)
+  const SLOT_CLASSES = ['animalReview1','animalReview2','animalReview3','animalReview4','animalReview5'];
 
-  let isDragging = false;
-  let startX = 0;
+  // 현재 보이는 5장의 "첫 카드 인덱스"(0기준)
+  // 0 → [1..5], 1 → [2..6], 2 → [3..7], 3 → [4..8]
+  // 여기서 한 칸 더 앞으로 가면 "리셋"해 0으로 돌아가게 함.
+  let start = 0;
 
-  slider.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    startX = e.pageX;
-  });
+  // 유틸
+  function clearSlots(el) {
+    // animalReview1~8 전부 제거
+    for (let i = 1; i <= 8; i++) el.classList.remove(`animalReview${i}`);
+    el.classList.remove('fade-in', 'fade-out');
+  }
 
-  document.addEventListener('mouseup', (e) => {
-    if (!isDragging) return;
-    const deltaX = e.pageX - startX;
-
-    if (deltaX < -50) {
-      // 👉 오른쪽으로 이동
-      if (currentStartIndex + visibleCount < cards.length) {
-        currentStartIndex++;
-        updateVisibleCards();
-      }
-    } else if (deltaX > 50) {
-      // 👈 왼쪽으로 이동
-      if (currentStartIndex > 0) {
-        currentStartIndex--;
-        updateVisibleCards();
-      }
-    }
-
-    isDragging = false;
-  });
-
-  function updateVisibleCards() {
-    cards.forEach((card, idx) => {
-      // 모든 클래스 제거
-      card.className = '';
-      card.style.display = 'none';
+  // 현재 start 윈도우를 슬롯(곡선 자리)에 매핑
+  function renderWindow() {
+    // 다 숨기고 시작
+    list.forEach(el => {
+      clearSlots(el);
+      el.style.display = 'none';
     });
 
-    for (let i = 0; i < visibleCount; i++) {
-      const cardIndex = currentStartIndex + i;
-      if (cardIndex >= cards.length) break;
-
-      const card = cards[cardIndex];
-
-      card.className = ''; // 잔여 클래스 초기화
-      card.classList.add(`animalReview${i + 1}`);
-      card.style.display = 'block';
+    // 보이는 5장만 animalReview1~5 자리에 올려둠
+    for (let i = 0; i < VISIBLE; i++) {
+      const idx = start + i;         // 0..7 범위 내만 사용 (리셋 정책상 wrap 안 함)
+      const el  = list[idx];
+      el.style.display = '';          // 보이게
+      el.classList.add(SLOT_CLASSES[i]); // 곡선 슬롯 배치
     }
   }
-});
+
+  // 경계 리셋: 현재 보이는 것들을 페이드아웃 → start 재설정 → 페이드인
+  function resetTo(targetStart) {
+    const currentlyVisible = list.filter(el =>
+      SLOT_CLASSES.some(c => el.classList.contains(c))
+    );
+    currentlyVisible.forEach(el => el.classList.add('fade-out'));
+
+    setTimeout(() => {
+      start = targetStart;      // 0(처음 화면) 또는 3(마지막 화면)
+      renderWindow();
+      slider.getBoundingClientRect(); // reflow
+      const nowVisible = list.filter(el =>
+        SLOT_CLASSES.some(c => el.classList.contains(c))
+      );
+      nowVisible.forEach(el => {
+        el.classList.add('fade-in');
+        setTimeout(() => el.classList.remove('fade-in'), 240);
+      });
+    }, 120);
+  }
+
+  // 한 장씩 이동 (dir: +1=오른쪽/이전, -1=왼쪽/다음)
+  function step(dir) {
+    if (dir > 0) {
+      // ➡️ 한 칸 앞으로: [1..5]→[2..6]→[3..7]→[4..8] 까지만
+      if (start >= 3) {
+        // [4..8] 에서 한 칸 더 → "처음 화면"으로 리셋
+        resetTo(0);
+        return;
+      }
+      start += 1;
+      renderWindow();
+    } else if (dir < 0) {
+      // ⬅️ 한 칸 뒤로: [4..8]←[3..7]←[2..6]←[1..5]
+      if (start <= 0) {
+        // [1..5] 에서 한 칸 뒤로 → "마지막 화면(4..8)"으로 리셋
+        resetTo(3);
+        return;
+      }
+      start -= 1;
+      renderWindow();
+    }
+  }
+
+  // 드래그 스냅 (x축, 1장씩만 이동)
+  let dragging = false, startX = 0, dx = 0;
+
+  function onDown(e) {
+    dragging = true;
+    startX = (e.clientX ?? e.touches?.[0]?.clientX ?? 0);
+    dx = 0;
+    slider.style.cursor = 'grabbing';
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    const x = (e.clientX ?? e.touches?.[0]?.clientX ?? 0);
+    dx = x - startX;
+  }
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    slider.style.cursor = 'grab';
+    const p = dx / STEP_PX;
+    if (p > SNAP) step(+1);     // 오른쪽으로 충분히 드래그 → 이전 카드 앞으로
+    else if (p < -SNAP) step(-1); // 왼쪽으로 충분히 드래그 → 다음 카드 앞으로
+    dx = 0;
+  }
+
+  // 초기 화면: [1..5]
+  renderWindow();
+
+  // 이벤트
+  slider.addEventListener('pointerdown', onDown);
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp);
+  window.addEventListener('pointercancel', onUp);
+  window.addEventListener('pointerleave', onUp);
+})();
+
+
+
+
 
 // 메뉴 클릭시 section 이동
 function scrollTosection(sectionId) {
