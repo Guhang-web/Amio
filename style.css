@@ -602,8 +602,15 @@ body.profile-active .mainTable {
     margin-right: 10px;
 }
 
+#main #section2 #patEatMenu ul li {
+    pointer-events: none;
+    user-select:none
+}
+
 #main #section2 #patEatMenu ul li img {
     width: 290px;
+    pointer-events: none;
+    user-select:none
 }
 
 #main #section2 #patEatMenu ul li:nth-child(1) img {
@@ -771,8 +778,15 @@ body.profile-active .mainTable {
     margin-right: 10px;
 }
 
+#main #section3 #patEatMenu1 ul li {
+    pointer-events: none;
+    user-select:none
+}
+
 #main #section3 #patEatMenu1 ul li img {
     width: 290px;
+    pointer-events: none;
+    user-select:none
 }
 
 #main #section3 #patEatMenu1 ul li:nth-child(1) {
@@ -1497,6 +1511,7 @@ main #section4 #section4Wrapper .section4Gnb .foodList li img.active {
     transform-origin: center center;
     flex: 0 0 auto;
     margin-right: 16px;
+    pointer-events: none;
 }
 
 #main #section6 .S6Wrapper .review .animalReview1 {
