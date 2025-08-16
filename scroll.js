@@ -12,6 +12,74 @@ function setVisible(el, shown) {
 }
 
 
+// === 추가: 타깃 요소 참조 ===
+const dogFinal = document.getElementById('dogFinalPosition');
+const dogFinalImg = dogFinal ? dogFinal.querySelector('img') : null;
+const dogThumbImg = dogThumb ? (dogThumb.querySelector('img') || dogThumb) : null;
+
+// === 추가: 이동용 플로팅 강아지 생성 (뷰포트 기준 고정) ===
+const movingDog = document.createElement('img');
+movingDog.src = dogThumbImg ? (dogThumbImg.src || 'mainImg/dog.png') : 'mainImg/dog.png';
+movingDog.alt = '강아지 이동 중';
+Object.assign(movingDog.style, {
+  position: 'fixed',   // viewport 좌표계
+  left: '0px',
+  top: '0px',
+  width: '0px',
+  height: '0px',
+  visibility: 'hidden',
+  pointerEvents: 'none',
+  zIndex: '350',       // blueBox(200) 위로
+  willChange: 'left, top, width, height, opacity'
+});
+document.body.appendChild(movingDog);
+
+// === 추가: 이동 상태 관리 ===
+let dogStartRect = null;   // 시작 rect(썸네일) 메모
+let dogWasInBlue = false;  // blue 구간 진입 여부
+const lerp = (a, b, t) => a + (b - a) * t;
+const getCenterRect = (el) => {
+  const r = el.getBoundingClientRect();
+  return { cx: r.left + r.width / 2, cy: r.top + r.height / 2, w: r.width, h: r.height };
+};
+
+// === CAT refs ===
+const catFinal = document.getElementById('catFinalPosition');
+const catFinalImg = catFinal ? catFinal.querySelector('img') : null;
+const catThumbImg = catThumb ? (catThumb.querySelector('img') || catThumb) : null;
+
+// .invisible 이 있으면 visibility로는 안 보이니 제거
+if (catFinalImg && catFinalImg.classList.contains('invisible')) {
+  catFinalImg.classList.remove('invisible');
+}
+
+// === 이동용 플로팅 고양이 (한 번만 생성) ===
+let movingCat = document.getElementById('movingCatImg');
+if (!movingCat) {
+  movingCat = document.createElement('img');
+  movingCat.id = 'movingCatImg';
+  movingCat.src = catThumbImg ? (catThumbImg.src || 'mainImg/catsTower.png') : 'mainImg/catsTower.png';
+  movingCat.alt = '고양이 이동 중';
+  Object.assign(movingCat.style, {
+    position: 'fixed',
+    left: '0px',
+    top: '0px',
+    width: '0px',
+    height: '0px',
+    visibility: 'hidden',
+    pointerEvents: 'none',
+    zIndex: '360',
+    willChange: 'left, top, width, height, opacity'
+  });
+  document.body.appendChild(movingCat);
+}
+
+let catStartRect = null;
+let catWasInGreen = false;
+let catSnapped = false; // greenStart에 진입한 그 프레임에 즉시 자리 고정했는지
+
+
+
 //  브라우저 스크롤 복원 방지
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
@@ -123,7 +191,9 @@ function updateSticky(scrollY) {
 }
 
 //  전환 애니메이션(네 기존 로직 그대로, Y 중앙정렬 추가만)
+
 function updateBoxes(scrollY) {
+  
   const windowHeight = window.innerHeight;
 
   // 네가 기존에 쓰던 기준 유지
@@ -141,6 +211,9 @@ function updateBoxes(scrollY) {
   const redProgress = clamp((scrollProgress - redStart) / redDuration, 0, 1);
   const blueProgress = clamp((scrollProgress - blueStart) / blueDuration, 0, 1);
   const greenProgress = clamp((scrollProgress - greenStart) / greenDuration, 0, 1);
+
+    //  블루 가시성 플래그를 바깥에서 쓸 수 있게 준비
+  let blueVisible = false;
 
   // ======== 가시성(visibility) 제어 ========
   // red : 0.0 ~ 0.3 구간에서만 보임
@@ -193,39 +266,203 @@ function updateBoxes(scrollY) {
     redBox.style.opacity = redOpacity;
   }
 
-  // ----- BLUE -----
-  if (blueBox) {
-    const blueBaseTranslateX = redProgress * -20;
-    const blueBaseScale = 1 + (redProgress * 0.3);
-    const blueBaseTranslateY = redProgress * -10;
+// ----- BLUE -----
+if (blueBox) {
+  // ======== 강아지 이동 애니메이션 : 썸네일 -> dogFinalPosition ========
+  // blue 범위: scrollProgress ∈ [blueStart, greenStart)
+  const inBlueRange = (scrollProgress >= blueStart - EPS) && (scrollProgress < greenStart - EPS);
 
-    const blueScale = blueBaseScale + (blueProgress * 1.2);
-    const blueTranslateX = blueBaseTranslateX + (blueProgress * -30);
-    const blueTranslateY = blueBaseTranslateY + (blueProgress * -30);
-    const blueOpacity = 1 - blueProgress;
+  if (inBlueRange && dogFinalImg && dogThumbImg) {
+    if (!dogWasInBlue) {
+      dogWasInBlue = true;
+      dogStartRect = getCenterRect(dogThumbImg);
+      setVisible(dogFinalImg, false);
+      setVisible(movingDog, true);
+      movingDog.style.opacity = '1';
+    }
 
-    blueBox.style.transform =
-      `translateX(-50%) translateY(-50%) scale(${blueScale}) translateX(${blueTranslateX}%) translateY(${blueTranslateY}%)`;
-    blueBox.style.opacity = blueOpacity;
-    blueBox.style.zIndex = (redProgress > 0.1 || blueProgress > 0.1) ? 200 : 95;
+    const target = getCenterRect(dogFinalImg);
+    const t = blueProgress;
+
+    const curW = lerp(dogStartRect.w, target.w, t);
+    const curH = lerp(dogStartRect.h, target.h, t);
+    const curCX = lerp(dogStartRect.cx, target.cx, t);
+    const curCY = lerp(dogStartRect.cy, target.cy, t);
+
+    movingDog.style.width = curW + 'px';
+    movingDog.style.height = curH + 'px';
+    movingDog.style.left = (curCX - curW / 2) + 'px';
+    movingDog.style.top  = (curCY - curH / 2) + 'px';
+
+    if (t >= 1 - EPS) {
+      setVisible(movingDog, false);
+      setVisible(dogFinalImg, true);
+    } else {
+      setVisible(dogFinalImg, false);
+    }
+
+  } else {
+    if (dogWasInBlue) {
+      dogWasInBlue = false;
+      dogStartRect = null;
+    }
+    setVisible(movingDog, false);
+
+    if (scrollProgress < blueStart - EPS) {
+      setVisible(dogFinalImg, false);
+    } else if (scrollProgress >= (blueStart + blueDuration) - EPS) {
+      // 강아지 최종 이미지는 네 기존 의도대로 유지 (원하면 숨김으로 바꿔도 OK)
+      setVisible(dogFinalImg, true);
+    }
   }
 
-  // ----- GREEN -----
-  if (greenBox) {
-    const greenBaseTranslateX = redProgress * -15;
-    const greenBaseScale = 1 + (redProgress * 0.2);
-    const greenBaseTranslateY = redProgress * -8;
+  const blueBaseTranslateX = redProgress * -20;
+  const blueBaseScale = 1 + (redProgress * 0.3);
+  const blueBaseTranslateY = redProgress * -10;
 
-    const greenScale = greenBaseScale + (greenProgress * 1.3);
-    const greenTranslateX = greenBaseTranslateX + (greenProgress * 30);
-    const greenTranslateY = greenBaseTranslateY + (greenProgress * -30);
-    const greenOpacity = 1 - greenProgress;
+  const blueScale = blueBaseScale + (blueProgress * 1.2);
+  const blueTranslateX = blueBaseTranslateX + (blueProgress * -30);
+  const blueTranslateY = blueBaseTranslateY + (blueProgress * -30);
 
-    greenBox.style.transform =
-      `translateX(-50%) translateY(-50%) scale(${greenScale}) translateX(${greenTranslateX}%) translateY(${greenTranslateY}%)`;
-    greenBox.style.opacity = greenOpacity;
-    greenBox.style.zIndex = (redProgress > 0.1 || greenProgress > 0.1) ? 200 : 90;
+  blueBox.style.transform =
+    `translateX(-50%) translateY(-50%) scale(${blueScale}) translateX(${blueTranslateX}%) translateY(${blueTranslateY}%)`;
+
+  // ======== ★ 여기부터: blueBox만 "늦게" 사라지게 하는 지연 페이드 ========
+  // 블루 진행도(0~1) 중 후반부터만 페이드 시작 → 끝에서 급격히 떨어지도록 이징
+  const FADE_START = 0.2;                                   // ★ 페이드 시작 지점(느낌에 맞게 0.6~0.75)
+  const fadeT = clamp((blueProgress - FADE_START) / (1 - FADE_START), 0, 1);
+  const lateDrop = Math.pow(fadeT, 3);                       // ★ 끝에서 급히 떨어지는 easeInCubic
+  const blueOpacitySlow = 1 - lateDrop;
+
+  // green 시작과 동시에 0 보장(겹침 방지)
+  const blueCoreVisible = (scrollProgress >= blueStart - EPS) && (scrollProgress < greenStart - EPS);
+  blueBox.style.opacity = blueCoreVisible ? blueOpacitySlow : 0;   // ★ 핵심: 느리게 사라지되 greenStart에서 0
+  blueBox.style.visibility = (blueCoreVisible && blueOpacitySlow > 0) ? 'visible' : 'hidden';
+  blueBox.style.pointerEvents = (blueCoreVisible && blueOpacitySlow > 0.2) ? 'auto' : 'none'; // 후반 상호작용 차단
+  // --- 이미지 동기 페이드(강아지) ---
+  // 블루 코어 구간에서만 강아지 이미지도 박스와 같은 타이밍으로 페이드
+  const isBlueCore =
+  (scrollProgress >= blueStart - EPS) &&
+    (scrollProgress <  greenStart - EPS);
+    
+    // 이동 중엔 플로팅 강아지(movingDog)만, 도착 후엔 최종 자리(dogFinalImg)만 보이므로
+    // 같은 타이밍(blueOpacitySlow)으로 각각에 alpha를 적용한다.
+    if (isBlueCore) {
+      const movingDogAlpha = (blueProgress < 1 - EPS) ? blueOpacitySlow : 0;
+      const dogFinalAlpha  = (blueProgress >= 1 - EPS) ? blueOpacitySlow : 0;
+      
+      // will-change은 미리 걸어두면 좋음(성능)
+      movingDog.style.willChange = 'left, top, width, height, opacity';
+      if (dogFinalImg) dogFinalImg.style.willChange = 'opacity';
+      
+      movingDog.style.opacity = String(movingDogAlpha);
+    if (dogFinalImg) dogFinalImg.style.opacity = String(dogFinalAlpha);
+  } else {
+    movingDog.style.opacity = '0';
+    if (dogFinalImg) dogFinalImg.style.opacity = '0';
   }
+  
+  
+  // ======== ★ 끝 ========
+  blueBox.style.zIndex = (redProgress > 0.1 || blueProgress > 0.1) ? 200 : 95;
+}
+// ----- GREEN -----
+if (greenBox) {
+  // 코어 가시 구간: [greenStart, greenStart + greenDuration)
+  const greenCoreVisible =
+    (scrollProgress >= greenStart - EPS) &&
+    (scrollProgress < (greenStart + greenDuration) - EPS);
+
+  // 진행도 (0~1)
+  const tRaw = greenProgress;
+  // 필요 시 이징: 부드럽게
+  const easeInOut = x => (x < 0.5) ? 2*x*x : 1 - Math.pow(-2*x + 2, 2) / 2;
+  const t = easeInOut(tRaw);
+
+  // ======== 고양이 이동: 썸네일 -> catFinalPosition (부드러운 보간) ========
+  if (greenCoreVisible && catFinalImg && catThumbImg) {
+    if (!catWasInGreen) {
+      catWasInGreen = true;
+      catStartRect = getCenterRect(catThumbImg); // 시작점 캡처
+      setVisible(catFinalImg, false);            // 도착 전 최종 이미지는 숨김
+      setVisible(movingCat, true);               // 플로팅 고양이 표시
+      movingCat.style.opacity = '1';
+    }
+
+    // 매 프레임 타깃(최종 자리) 측정
+    const target = getCenterRect(catFinalImg);
+
+    const curW  = lerp(catStartRect.w,  target.w,  t);
+    const curH  = lerp(catStartRect.h,  target.h,  t);
+    const curCX = lerp(catStartRect.cx, target.cx, t);
+    const curCY = lerp(catStartRect.cy, target.cy, t);
+
+    movingCat.style.width  = curW + 'px';
+    movingCat.style.height = curH + 'px';
+    movingCat.style.left   = (curCX - curW / 2) + 'px';
+    movingCat.style.top    = (curCY - curH / 2) + 'px';
+
+    if (t >= 1 - EPS) {
+      // 이동 완료: 플로팅 숨기고 최종 이미지 노출
+      setVisible(movingCat, false);
+      setVisible(catFinalImg, true);
+    } else {
+      setVisible(catFinalImg, false);
+    }
+  } else {
+    // 코어 구간 밖: 모두 정리(블루와 동일하게 동기화)
+    if (catWasInGreen) {
+      catWasInGreen = false;
+      catStartRect = null;
+    }
+    setVisible(movingCat, false);
+    setVisible(catFinalImg, false);
+  }
+
+  // ======== greenBox 트랜스폼 ========
+  const greenBaseTranslateX = redProgress * -15;
+  const greenBaseScale      = 1 + (redProgress * 0.2);
+  const greenBaseTranslateY = redProgress * -8;
+
+  const greenScale      = greenBaseScale + (greenProgress * 1.3);
+  const greenTranslateX = greenBaseTranslateX + (greenProgress * 30);
+  const greenTranslateY = greenBaseTranslateY + (greenProgress * -30);
+
+  greenBox.style.transform =
+    `translateX(-50%) translateY(-50%) scale(${greenScale}) translateX(${greenTranslateX}%) translateY(${greenTranslateY}%)`;
+
+  // ======== greenBox 느린 페이드(블루와 동일한 느낌) ========
+  // 후반에만 서서히 사라지다가 마지막에 툭 떨어지게
+  const FADE_START_G = 0.2; // 블루에서 좋았던 0.65 그대로
+  const fadeTG = clamp((greenProgress - FADE_START_G) / (1 - FADE_START_G), 0, 1);
+  const lateDropG = Math.pow(fadeTG, 1); // 끝에서 급격히
+  const greenOpacitySlow = 1 - lateDropG;
+
+  greenBox.style.opacity = greenCoreVisible ? greenOpacitySlow : 0;
+  greenBox.style.visibility = (greenCoreVisible && greenOpacitySlow > 0) ? 'visible' : 'hidden';
+  greenBox.style.pointerEvents = (greenCoreVisible && greenOpacitySlow > 0.2) ? 'auto' : 'none';
+  greenBox.style.zIndex = (redProgress > 0.1 || greenProgress > 0.1) ? 200 : 90;
+
+  // === 이미지 동기 페이드(고양이) ===
+const isGreenCore =
+  (scrollProgress >= greenStart - EPS) &&
+  (scrollProgress <  greenStart + greenDuration - EPS);
+
+if (isGreenCore) {
+  // 이동 중엔 플로팅 고양이만, 도착 후엔 최종 자리 고양이만 보이도록
+  const movingCatAlpha = (greenProgress < 1 - EPS) ? greenOpacitySlow : 0;
+  const catFinalAlpha  = (greenProgress >= 1 - EPS) ? greenOpacitySlow : 0;
+
+  movingCat.style.opacity = String(movingCatAlpha);
+  if (catFinalImg) catFinalImg.style.opacity = String(catFinalAlpha);
+} else {
+  movingCat.style.opacity = '0';
+  if (catFinalImg) catFinalImg.style.opacity = '0';
+}
+
+}
+
+
 }
 
 // 스크롤/리사이즈 루프 (성능: rAF)
@@ -246,11 +483,12 @@ function updateAndRender() {
 // 이벤트: passive 스크롤, 리사이즈/오리엔테이션 변경
 window.addEventListener('scroll', onScroll, { passive: true });
 window.addEventListener('resize', () => {
+   dogStartRect = null;
   measure();
   updateAndRender();
 });
 window.addEventListener('orientationchange', () => {
-  setTimeout(() => { measure(); updateAndRender(); }, 50);
+  setTimeout(() => { dogStartRect = null; measure(); updateAndRender(); }, 50);
 });
 
 // 이미지 로딩 후 재측정(레이아웃 변형 방지)

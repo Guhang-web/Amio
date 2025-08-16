@@ -15,13 +15,21 @@ body {
 }
 
 /*  Section1 */
+.background-layer {
+  position: fixed; /* ✅ 항상 뷰포트에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* ✅ 화면 꽉 채움 */
+  background-image: url("mainImg/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1; /* ✅ 콘텐츠 뒤에 배치 */
+}
 #main #section1 {
-    background-image: url("mainImg/background.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     width: 100%;
-    height: 260vh;
+    height: 280vh;
     position: relative;
     top: 0;
     min-width: 1680px;
@@ -203,6 +211,7 @@ body {
     right: 0;
     margin-right: 19%;
     display: flex;
+    transition: opacity 0.5s ease, transform 0.8s ease;
 
 }
 
@@ -320,7 +329,6 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    /* 왼쪽에서 이동해오는 느낌 */
 }
 
 #main #section1 #dogProfile ul {
@@ -1076,6 +1084,10 @@ main #section4 #section4Wrapper .section4Gnb .foodList li img.active {
     background-color: rgba(100, 100, 100, 0.5);
     border-radius: 100%;
     cursor: pointer;
+    transition: transform 0.1 ease;
+}
+#main #section4 #section4Wrapper .section4Gnb .choices svg:hover {
+transform: scale(1.3);
 }
 
 /* 글박스 */
@@ -1480,6 +1492,30 @@ main #section4 #section4Wrapper .section4Gnb .foodList li img.active {
 }
 
 /* 리뷰 카드 */
+#main #section6 .S6Wrapper .page-btn{
+    display: flex;
+    width: 360px;
+    height: 100px;
+    position: absolute;
+    top: 23%;
+    left: 42%;
+    transform: translate(-50%,-50%);
+    z-index: 35;
+}
+#main #section6 .S6Wrapper .page-btn .next{
+    margin-left: 20px;
+}
+
+#main #section6 .S6Wrapper .page-btn svg .page-c {
+    stroke: none;
+    cursor: pointer;
+}
+
+#main #section6 .S6Wrapper .page-btn line {
+    stroke-width: 2;
+    stroke: #fff;
+}
+
 #main #section6 .S6Wrapper .slider-wrapper {
     overflow: hidden;
     width: 100%;
