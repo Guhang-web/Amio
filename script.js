@@ -94,7 +94,7 @@ sliderWrapper1.addEventListener('scroll', () => {
 document.querySelectorAll('.food-btn') // => svg들만 선택됨
 
 document.addEventListener('DOMContentLoaded', () => {
-  const employeeImg = document.getElementById('employeeImage'); // 종업원 이미지
+  const employeeImg = document.getElementById('s2Girl2'); // 종업원 이미지
   const speechText = document.querySelector('.speech-text'); // 말풍선 텍스트
   const foodImgs = document.querySelectorAll('.foodList li img'); // 모든 음식 이미지
   const buttons = document.querySelectorAll('.food-btn'); // 모든 SVG 버튼
@@ -104,38 +104,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // 음식별 설정 데이터
   const foodData = {
     chiken: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/chiken.png',
       text: '바르게 기른 동물복지 생닭고기를<br>사용하고 반려동물 첨가물 원칙을<br>지켜 올바른 식단을 만듭니다.'
     },
     egg: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/egg.png',
       text: '동물복지 농장에서 바르게 자란<br>닭들이 낳은 달걀을 사용해<br>자연담은 식단을 만듭니다.'
     },
     frult: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/frult.png',
       text: '내과 전문 수의사가 바르게<br>키운 채소들을 사용해 레시피를<br>설계하여 건강담은 식단을 만듭니다.'
     },
     salmon: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/salmon.png',
       text: '자연담은 힘찬 연어 노르웨이산<br>연어로 싱싱함이 더해 올바른<br>식단을 만드는데 주된 재료입니다.'
     },
     sort: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/sort.png',
       text: '수의사가 제안하는 기능별<br>건강케어에 들어가는 차전지피<br>반려동물들의 변비를 치료합니다.'
     },
     turkey: {
-      employee: 'section2Img/s2Main3.png',
-      marginTop: '1.5px',
+      employee: 'section2Img/s2Girl1.png',
       food: 'section2Img/turkey.png',
       text: '바르게 기른 칠면조 고기를<br>사용하고 반려동물 첨가물<br>원칙을 지켜 식단을 만듭니다.'
     }
@@ -155,8 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // 이미 선택한 음식이면 → 리셋
       if (currentFood === food) {
-        employeeImg.src = 'section2Img/s2Main1.png'; // 기본 종업원 이미지
-        employeeImg.style.marginTop = '0px';
+        employeeImg.src = 'section2Img/s2Girl2.png'; // 기본 종업원 이미지
         speechText.innerHTML = '좌측에 식재료들을 눌러<br><br>식재료들의 정보를 확인해보세요!';
         hideAllFoods();
         currentFood = null;
